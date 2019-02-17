@@ -387,6 +387,7 @@ go
 -------------
 exec spu_BuscarDNI '45784129'
 
+
 /*********************************************************************************************************************/
 /**************************************			PRODUCTO		******************************************************/
 /*********************************************************************************************************************/
@@ -700,6 +701,55 @@ begin
 			else select CodError=1,Mensaje='El campo de cantidad no debe estar vacio'
 		end
 		ELSE select CodError=1,Mensaje='El campo de codproducto no debe estar vacio'
+	end
+	ELSE select  CodError=1,Mensaje='El NroDocVenta no puede estar vacio o ya existe este codigo'
+END
+go
+
+/*********************************************************************************************************************/
+/**************************************		DOCVENTACREDITO    ******************************************************/
+/*********************************************************************************************************************/
+--------------------------------	------------------------------------
+
+if exists (select * from dbo.sysobjects where name ='spu_TDocVentaCredito_Insertar')
+	drop procedure spu_TDocVentaCredito_Insertar
+go
+CREATE PROCEDURE spu_TDocVentaCredito_Insertar
+	@NroDocVentaCredito varchar(10),
+	@NroDocVenta varchar(10),
+	@NroCuotas int,
+	@FechaPago varchar(10),
+	@Observaciones varchar(50),
+	@Estado varchar(20)
+as
+begin
+-- validar codigo del cliente
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	begin
+		-- validar NroDocVenta
+		IF (@NroDocVenta!='')
+		begin
+			-- validar @NroCuotas
+			if(@NroCuotas>0)
+			begin
+				if(@FechaPago!='')
+				begin
+					if(@Observaciones!='')
+					begin
+						if(@Estado!='')
+						begin
+							insert into TDocVentaCredito values(@NroDocVentaCredito,@NroDocVenta,@NroCuotas,@FechaPago,@Observaciones,@Estado)
+							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO insertado exitosamente'
+						end
+						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+					end
+					else select CodError=1,Mensaje='El campo de Observaciones no debe estar vacio'
+				end
+				else select CodError=1,Mensaje='El campo de Fecha de pago no debe estar vacio'
+			end
+			else select CodError=1,Mensaje='El campo de NroCuotas no debe estar vacio'
+		end
+		ELSE select CodError=1,Mensaje='El campo de fecha no debe estar vacio'
 	end
 	ELSE select  CodError=1,Mensaje='El NroDocVenta no puede estar vacio o ya existe este codigo'
 END

@@ -27,7 +27,11 @@ namespace LibClases
 
         public object ListarPorCodigo(string nroDocVenta)
         {
-            throw new NotImplementedException();
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuTDetalleVenta_ListaPorCodigo '" + nroDocVenta + "'";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
         }
     }
 }

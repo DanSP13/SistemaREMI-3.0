@@ -370,6 +370,22 @@ end
 go
 --------------------------------------------------------------------------------------------------
 
+-----------Buscar CodCliente por DNI-------------------
+----Procedimiento que devuelve el codigo de un cliente a partir de su DNI
+if exists (select * from dbo.sysobjects where name='spu_BuscarDNI')
+	drop procedure spu_BuscarDNI
+go
+create procedure spu_BuscarDNI
+	@DNI varchar(8)
+as 
+begin
+	select CodCliente
+		from TCliente
+		where DNI=@DNI
+end
+go
+-------------
+exec spu_BuscarDNI '45784129'
 
 /*********************************************************************************************************************/
 /**************************************			PRODUCTO		******************************************************/
@@ -847,19 +863,3 @@ insert into TDetalleVentaCredito values('BC-00015','1','23/02/2019','U0001','100
 insert into TArqueoCaja values('AC-00001','12/01/2018',100,3547,'U0001')
 insert into TArqueoCaja values('AC-00002','12/01/2018',100,3547,'U0001')
 
------------Buscar CodCliente por DNI-------------------
-----Procedimiento que devuelve el codigo de un cliente a partir de su DNI
-if exists (select * from dbo.sysobjects where name='spu_BuscarDNI')
-	drop procedure spu_BuscarDNI
-go
-create procedure spu_BuscarDNI
-	@DNI varchar(8)
-as 
-begin
-	select CodCliente
-		from TCliente
-		where DNI=@DNI
-end
-go
--------------
-exec spu_BuscarDNI '45784129'

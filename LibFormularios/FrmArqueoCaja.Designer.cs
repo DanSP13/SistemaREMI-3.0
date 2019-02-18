@@ -40,17 +40,21 @@
             this.TxtSolesInicio = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.PanDetalleArqueo = new System.Windows.Forms.Panel();
-            this.DgvDetalleArqueo = new System.Windows.Forms.DataGridView();
+            this.DgvDetalleArqueoContado = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.TxtSolesFinal = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.DgvDetalleArqueoCredito = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.PanDatosArqueo.SuspendLayout();
             this.PanDetalleArqueo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueoContado)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueoCredito)).BeginInit();
             this.SuspendLayout();
             // 
             // PanDatosArqueo
@@ -160,22 +164,25 @@
             // 
             // PanDetalleArqueo
             // 
-            this.PanDetalleArqueo.Controls.Add(this.DgvDetalleArqueo);
+            this.PanDetalleArqueo.Controls.Add(this.label8);
+            this.PanDetalleArqueo.Controls.Add(this.label7);
+            this.PanDetalleArqueo.Controls.Add(this.DgvDetalleArqueoCredito);
+            this.PanDetalleArqueo.Controls.Add(this.DgvDetalleArqueoContado);
             this.PanDetalleArqueo.Location = new System.Drawing.Point(3, 112);
             this.PanDetalleArqueo.Name = "PanDetalleArqueo";
             this.PanDetalleArqueo.Size = new System.Drawing.Size(702, 168);
             this.PanDetalleArqueo.TabIndex = 1;
             // 
-            // DgvDetalleArqueo
+            // DgvDetalleArqueoContado
             // 
-            this.DgvDetalleArqueo.AllowUserToAddRows = false;
-            this.DgvDetalleArqueo.AllowUserToDeleteRows = false;
-            this.DgvDetalleArqueo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvDetalleArqueo.Location = new System.Drawing.Point(5, 6);
-            this.DgvDetalleArqueo.Name = "DgvDetalleArqueo";
-            this.DgvDetalleArqueo.ReadOnly = true;
-            this.DgvDetalleArqueo.Size = new System.Drawing.Size(696, 161);
-            this.DgvDetalleArqueo.TabIndex = 0;
+            this.DgvDetalleArqueoContado.AllowUserToAddRows = false;
+            this.DgvDetalleArqueoContado.AllowUserToDeleteRows = false;
+            this.DgvDetalleArqueoContado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvDetalleArqueoContado.Location = new System.Drawing.Point(6, 17);
+            this.DgvDetalleArqueoContado.Name = "DgvDetalleArqueoContado";
+            this.DgvDetalleArqueoContado.ReadOnly = true;
+            this.DgvDetalleArqueoContado.Size = new System.Drawing.Size(696, 71);
+            this.DgvDetalleArqueoContado.TabIndex = 0;
             // 
             // panel1
             // 
@@ -233,6 +240,36 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Total: ";
             // 
+            // DgvDetalleArqueoCredito
+            // 
+            this.DgvDetalleArqueoCredito.AllowUserToAddRows = false;
+            this.DgvDetalleArqueoCredito.AllowUserToDeleteRows = false;
+            this.DgvDetalleArqueoCredito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvDetalleArqueoCredito.Location = new System.Drawing.Point(5, 108);
+            this.DgvDetalleArqueoCredito.Name = "DgvDetalleArqueoCredito";
+            this.DgvDetalleArqueoCredito.ReadOnly = true;
+            this.DgvDetalleArqueoCredito.Size = new System.Drawing.Size(696, 57);
+            this.DgvDetalleArqueoCredito.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Contado :";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(27, 91);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Credito :";
+            // 
             // FrmArqueoCaja
             // 
             this.ClientSize = new System.Drawing.Size(706, 391);
@@ -245,9 +282,11 @@
             this.PanDatosArqueo.ResumeLayout(false);
             this.PanDatosArqueo.PerformLayout();
             this.PanDetalleArqueo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueo)).EndInit();
+            this.PanDetalleArqueo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueoContado)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueoCredito)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -266,12 +305,15 @@
         protected System.Windows.Forms.TextBox TxtFecha;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel PanDetalleArqueo;
-        private System.Windows.Forms.DataGridView DgvDetalleArqueo;
+        private System.Windows.Forms.DataGridView DgvDetalleArqueoContado;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.TextBox TxtSolesFinal;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView DgvDetalleArqueoCredito;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }

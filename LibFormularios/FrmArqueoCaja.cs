@@ -139,10 +139,12 @@ namespace LibFormularios
                         LimpiarTodo();
                         //Limpiar el datagridview
                         DgvDetalleArqueoContado.Rows.Clear();
-                        DgvDetalleArqueoCredito.Rows.Clear();
                     }
                     else
                         MessageBox.Show(aArqueoCaja.ValorAtributo("Mensaje"), "ERROR");
+                    InicializarAtributoClave();
+                    InicializarAtributosNoClave();
+                    //ListaRegistros();
                 }
                 else MessageBox.Show("DEBE COMPLETAR EL LLENADO DEL FORMULARIO", "ALERTA");
             }
@@ -154,32 +156,13 @@ namespace LibFormularios
 
         private void LimpiarTodo()
         {
-            DgvDetalleArqueoContado.DataSource = null;
-            DgvDetalleArqueoCredito.DataSource = null;
-            txtTotal.Text = "";
-            TxtSolesInicio.Text = "";
-            TxtSolesFinal.Text = "";
+            throw new NotImplementedException();
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             Grabar();
         }
-        public void Calcular()
-        {
-            double Total = 0;
-            for (int k = 0; k < DgvDetalleArqueoContado.RowCount; k++)
-            {
-                double subtotal = double.Parse(DgvDetalleArqueoContado["Total", k].Value.ToString());
-                Total += subtotal;
-            }
-            double Total2 = 0;
-            for (int k = 0; k < DgvDetalleArqueoCredito.RowCount; k++)
-            {
-                double subtotal = double.Parse(DgvDetalleArqueoCredito["Total", k].Value.ToString());
-                Total += subtotal;
-            }
-            txtTotal.Text = Convert.ToString(Total + Total2);
-        }
+
     }
 }

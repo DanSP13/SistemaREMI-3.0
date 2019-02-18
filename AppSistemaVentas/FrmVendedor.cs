@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibFormularios;
+using LibClases;
 using System.Runtime.InteropServices;
 
 namespace AppSistemaVentas
@@ -88,9 +89,31 @@ namespace AppSistemaVentas
 
         private void btnCerrarSes_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            FormLogin L = new FormLogin();
-            L.ShowDialog();
+            CEntidad P = new CProducto() as CEntidad;
+            if ((P.VerificarSiHizoDocVenta(lblCodigo.Text) || P.VerificarSiHizoDocVentaCredito(lblCodigo.Text)) && !P.VerificarSiHizoArqueo(lblCodigo.Text))
+            {
+                MessageBox.Show("No hizo arqueo de caja", "ERROR");
+                FrmVendedor FV = new FrmVendedor(lblCodigo.Text, lblNombre.Text);
+                FV.Size = new System.Drawing.Size(969, 725);
+            }
+            else
+            {
+                if (!P.VerificarSiHizoDocVenta(lblCodigo.Text))
+                {
+                    this.Hide();
+                    FormLogin L = new FormLogin();
+                    L.ShowDialog();
+                }
+                else
+                {
+                    if ((P.VerificarSiHizoDocVenta(lblCodigo.Text) || P.VerificarSiHizoDocVentaCredito(lblCodigo.Text)) && P.VerificarSiHizoArqueo(lblCodigo.Text))
+                    {
+                        this.Hide();
+                        FormLogin L = new FormLogin();
+                        L.ShowDialog();
+                    }
+                }
+            }
         }
     }
 }

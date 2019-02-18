@@ -234,6 +234,22 @@ namespace LibClases
             aConexion.EjecutarSelect(Consulta);
             return (aConexion.Datos.Tables[0].Rows.Count > 0);
         }
+        public DataTable CargarArqueoCajaContado(string CodUsuario)
+        {
+            //-- Retorna una tabla con la lsita completam de libros
+            //string Consulta = "select * from " + aNombreTabla;
+            string Consulta = "exec spu_CargarDatosContadoArqueoCaja " + "'" + CodUsuario + "'";
+            aConexion.EjecutarSelect(Consulta);
+            return aConexion.Datos.Tables[0];
+        }
+        public DataTable CargarArqueoCajaCredito(string CodUsuario)
+        {
+            //-- Retorna una tabla con la lsita completam de libros
+            //string Consulta = "select * from " + aNombreTabla;
+            string Consulta = "exec spu_CargarDatosCreditoArqueoCaja " + "'" + CodUsuario + "'";
+            aConexion.EjecutarSelect(Consulta);
+            return aConexion.Datos.Tables[0];
+        }
         public bool VerificarSiHizoDocVenta(string CodUsuario)
         {
             //-- Retorna una tabla con la lsita completam de libros

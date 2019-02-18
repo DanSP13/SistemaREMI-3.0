@@ -17,6 +17,15 @@ namespace LibFormularios
             aArqueoCaja = new CArqueoCaja();
             TxtCodUsuario.Text = CodigoUsuario;
             TxtNroArqueo.Text = aArqueoCaja.UltimoArqueoCaja();
+            FechaActual();
+            DgvDetalleArqueoContado.DataSource = aArqueoCaja.CargarArqueoCajaContado(CodigoUsuario);
+            DgvDetalleArqueoCredito.DataSource = aArqueoCaja.CargarArqueoCajaCredito(CodigoUsuario);
+            Calcular();
+        }
+        //-----------------------------------------------------------
+        public void FechaActual()
+        {
+            TxtFecha.Text = string.Format(DateTime.Now.ToString());
         }
         ///////------------Metodos----------
         public string[] AsignarValoresAtributos()
@@ -50,7 +59,7 @@ namespace LibFormularios
         //---Listar los registros y mostrarlos en el datagrid
         public  void ListaRegistros()
         {   //--Mostrar todos loslibros de la tabla en el grid
-            DgvDetalleArqueo.DataSource = aArqueoCaja.ListaGeneral();
+            //DgvDetalleArqueoContado.DataSource = aArqueoCaja.ListaGeneral();
         }
         //----------------------------------------
         //---Verificar los campos obligatorios(codigo y titulo)
@@ -99,7 +108,7 @@ namespace LibFormularios
         {
             if (aArqueoCaja.ExisteClavePrimaria(TxtNroArqueo.Text))
             {
-                DgvDetalleArqueo.Columns.Clear();
+                DgvDetalleArqueoContado.Columns.Clear();
                 BloqueoFormulario(false);
                 ProcesarClave();
             }
@@ -129,7 +138,7 @@ namespace LibFormularios
                         //Limpiar el formulario
                         LimpiarTodo();
                         //Limpiar el datagridview
-                        DgvDetalleArqueo.Rows.Clear();
+                        DgvDetalleArqueoContado.Rows.Clear();
                     }
                     else
                         MessageBox.Show(aArqueoCaja.ValorAtributo("Mensaje"), "ERROR");
@@ -154,5 +163,6 @@ namespace LibFormularios
         {
             Grabar();
         }
+
     }
 }

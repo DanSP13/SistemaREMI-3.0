@@ -595,19 +595,7 @@ begin
 	order by NroDocVenta desc
 end
 go
--------------------------------------------------------------------------------------------------------------
---------------------------Ultima Nro de venta credito -------------------------------------------------------------
-if exists (select * from dbo.sysobjects where name='spu_UltimoNroDocVentaCredito')
-	drop procedure spu_UltimoNroDocVentaCredito
-go
-create procedure spu_UltimoNroDocVentaCredito
-as 
-begin
-	select top 1 (substring(NroDocVenta,0,7)+convert(varchar(10),(convert(int,substring(NroDocVenta,5,len(NroDocVenta)))+1))) as Nro 
-	from TDocVenta
-	order by NroDocVenta desc
-end
-go
+
 
 /*********************************************************************************************************************/
 /**************************************		Reporte de Venta    ******************************************************/
@@ -709,7 +697,7 @@ go
 /*********************************************************************************************************************/
 /**************************************		DOCVENTACREDITO    ******************************************************/
 /*********************************************************************************************************************/
---------------------------------	------------------------------------
+--------------------------------	Insertar Docventacredito	------------------------------------
 
 if exists (select * from dbo.sysobjects where name ='spu_TDocVentaCredito_Insertar')
 	drop procedure spu_TDocVentaCredito_Insertar
@@ -734,26 +722,204 @@ begin
 			begin
 				if(@FechaPago!='')
 				begin
-					if(@Observaciones!='')
-					begin
 						if(@Estado!='')
 						begin
 							insert into TDocVentaCredito values(@NroDocVentaCredito,@NroDocVenta,@NroCuotas,@FechaPago,@Observaciones,@Estado)
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO insertado exitosamente'
 						end
 						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
-					end
-					else select CodError=1,Mensaje='El campo de Observaciones no debe estar vacio'
 				end
-				else select CodError=1,Mensaje='El campo de Fecha de pago no debe estar vacio'
+				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end
-			else select CodError=1,Mensaje='El campo de NroCuotas no debe estar vacio'
+			else select CodError=1,Mensaje='El campo de @NroCuotas no debe estar vacio'
 		end
-		ELSE select CodError=1,Mensaje='El campo de fecha no debe estar vacio'
+		ELSE select CodError=1,Mensaje='El campo de @NroDocVenta no debe estar vacio'
 	end
-	ELSE select  CodError=1,Mensaje='El NroDocVenta no puede estar vacio o ya existe este codigo'
+	ELSE select  CodError=1,Mensaje='El @NroDocVentaCredito no puede estar vacio o ya existe este codigo'
 END
-go 
+go
+
+--------------------------------	Actualizar Docventacredito	------------------------------------
+if exists (select * from dbo.sysobjects where name ='spu_TDocVentaCredito_Actualizar')
+	drop procedure spu_TDocVentaCredito_Actualizar
+go
+CREATE PROCEDURE spu_TDocVentaCredito_Actualizar
+	@NroDocVentaCredito varchar(10),
+	@NroDocVenta varchar(10),
+	@NroCuotas int,
+	@FechaPago varchar(10),
+	@Observaciones varchar(50),
+	@Estado varchar(20)
+as
+begin
+-- validar codigo del cliente
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	begin
+		-- validar NroDocVenta
+		IF (@NroDocVenta!='')
+		begin
+			-- validar @NroCuotas
+			if(@NroCuotas>0)
+			begin
+				if(@FechaPago!='')
+				begin
+						if(@Estado!='')
+						begin
+							update TDocVentaCredito set
+							NroDocVenta= @NroDocVenta,
+							NroCuotas= @NroCuotas,
+							FechaPago= @FechaPago,
+							Observaciones= @Observaciones,
+							Estado= @Estado
+							where NroDocVentaCredito=@NroDocVentaCredito
+							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO actualizado exitosamente'
+						end
+						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+				end
+				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
+			end
+			else select CodError=1,Mensaje='El campo de @NroCuotas no debe estar vacio'
+		end
+		ELSE select CodError=1,Mensaje='El campo de @NroDocVenta no debe estar vacio'
+	end
+	ELSE select  CodError=1,Mensaje='El @NroDocVentaCredito no puede estar vacio o ya existe este codigo'
+END
+go
+
+--------------------------Ultima Nro de venta credito -------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_UltimoNroDocVentaCredito')
+	drop procedure spu_UltimoNroDocVentaCredito
+go
+create procedure spu_UltimoNroDocVentaCredito
+as 
+begin
+	select top 1 (substring(NroDocVenta,0,7)+convert(varchar(10),(convert(int,substring(NroDocVenta,5,len(NroDocVenta)))+1))) as Nro 
+	from TDocVenta
+	order by NroDocVenta desc
+end
+go
+
+--------------------------------	Listar VentaCredito	------------------------------------
+
+if exists (select * from dbo.sysobjects where name ='spu_TDocVentaCredito_Listar')
+	drop procedure spu_TDocVentaCredito_Listar
+go
+CREATE PROCEDURE spu_TDocVentaCredito_Listar
+	@NroDocVentaCredito varchar (10)
+as
+begin
+	select * 
+		from TDocVentaCredito 
+		where NroDocVentaCredito=@NroDocVentaCredito
+END
+go
+/*********************************************************************************************************************/
+/**************************************		DOCVENTACREDITODETALLE   ******************************************************/
+/*********************************************************************************************************************/
+
+--------------------------------	Insertar DocventacreditoDetalle	------------------------------------
+if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Insertar')
+	drop procedure spu_TDetalleVentaCredito_Insertar
+go
+CREATE PROCEDURE spu_TDetalleVentaCredito_Insertar
+	@NroDocVentaCredito varchar(10),
+	@CuotaActual int,
+	@Fecha varchar(10),
+	@CodUsuario varchar(10),
+	@MontoPagado float
+as 
+begin
+	IF (@NroDocVentaCredito!='' and exists (select * from TDetalleVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
+	begin
+		-- validar nombres
+		IF (@CuotaActual>0)
+		begin
+			if(@Fecha!='')
+			begin
+				if(@CodUsuario!='' and exists (select * from TUsuario where CodUsuario=@CodUsuario))
+				begin
+					if(@MontoPagado>0)
+					begin
+						insert into TDetalleVentaCredito values (@NroDocVentaCredito,@CuotaActual,@Fecha,@CodUsuario,@MontoPagado)
+						select CodError=0,Mensaje='Registro del DETALLE VENTA CREDITO insertado exitosamente'
+					END
+					ELSE select CodError=1,Mensaje='El campo de MontoPagado debe ser mayor a 0'
+				end 
+				ELSE select CodError=1,Mensaje='El campo de CodUsuario no debe estar vacio o no se enuentra'
+			end
+			ELSE select CodError=1,Mensaje='El campo de	@Fecha no debe estar vacio'
+		end
+		ELSE select CodError=1,Mensaje='El campo de	@CuotaActual no debe estar vacio'
+	end
+	ELSE select CodError=1,Mensaje='El @NroDocVentaCredito no puede estar vacio o no  ya existe este codigo'
+end
+go
+
+--------------------------------	Actualizar DocventacreditoDetalle	------------------------------------
+if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Actualizar')
+	drop procedure spu_TDetalleVentaCredito_Actualizar
+go
+CREATE PROCEDURE spu_TDetalleVentaCredito_Actualizar
+	@NroDocVentaCredito varchar(10),
+	@CuotaActual int,
+	@Fecha varchar(10),
+	@CodUsuario varchar(10),
+	@MontoPagado float
+as 
+begin
+	IF (@NroDocVentaCredito!='' and exists (select * from TDetalleVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
+	begin
+		-- validar nombres
+		IF (@CuotaActual>0)
+		begin
+			if(@Fecha!='')
+			begin
+				if(@CodUsuario!='' and exists (select * from TUsuario where CodUsuario=@CodUsuario))
+				begin
+					if(@MontoPagado>0)
+					begin
+						update TDetalleVentaCredito set
+							CuotaActual=@CuotaActual,
+							Fecha=@Fecha,
+							CodUsuario=@CodUsuario,
+							MontoPagado=@MontoPagado
+						where NroDocVentaCredito=@NroDocVentaCredito
+						select CodError=0,Mensaje='Registro del DETALLE VENTA DE CREDITO actualizado exitosamente'
+					END
+					ELSE select CodError=1,Mensaje='El campo de MontoPagado debe ser mayor a 0'
+				end 
+				ELSE select CodError=1,Mensaje='El campo de CodUsuario no debe estar vacio o no se enuentra'
+			end
+			ELSE select CodError=1,Mensaje='El campo de	@Fecha no debe estar vacio'
+		end
+		ELSE select CodError=1,Mensaje='El campo de	@CuotaActual no debe estar vacio'
+	end
+	ELSE select CodError=1,Mensaje='El @NroDocVentaCredito no puede estar vacio o no  ya existe este codigo'
+end
+go
+
+--------------------------------	Listar DocventacreditoDetalle	------------------------------------
+if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Actualizar')
+	drop procedure spu_TDetalleVentaCredito_Actualizar
+go
+CREATE PROCEDURE spu_TDetalleVentaCredito_Actualizar
+	@NroDocVentaCredito varchar(10)
+as
+begin
+	select *
+		from TDetalleVentaCredito
+		where NroDocVentaCredito=@NroDocVentaCredito 
+end
+go
+
+/*********************************************************************************************************************/
+/**************************************		ARQUEO DE CAJA   ******************************************************/
+/*********************************************************************************************************************/
+
+
+
+
+
 /*********************************************************************************************************************/
 /**************************************		PRUEBAS     	    ******************************************************/
 /*********************************************************************************************************************/

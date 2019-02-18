@@ -140,6 +140,7 @@ namespace LibFormularios
                         //Limpiar el datagridview
                         DgvDetalleArqueoContado.Rows.Clear();
                         DgvDetalleArqueoCredito.Rows.Clear();
+                        TxtNroArqueo.Text = aArqueoCaja.UltimoArqueoCaja();
                     }
                     else
                         MessageBox.Show(aArqueoCaja.ValorAtributo("Mensaje"), "ERROR");

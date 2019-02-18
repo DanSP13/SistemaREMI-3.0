@@ -596,23 +596,6 @@ begin
 end
 go
 
-
-/*********************************************************************************************************************/
-/**************************************		Reporte de Venta    ******************************************************/
-/*********************************************************************************************************************/
------------------------------------------------------------------------------------------------------------------------
---------------------------Ultima Arqueo de caja -------------------------------------------------------------
-if exists (select * from dbo.sysobjects where name='spu_UltimoArqueoDeCaja')
-	drop procedure spu_UltimoArqueoDeCaja
-go
-create procedure spu_UltimoArqueoDeCaja
-as 
-begin
-	select top 1 (substring(NroArqueoCaja,0,7)+convert(varchar(10),(convert(int,substring(NroArqueoCaja,5,len(NroArqueoCaja)))+1))) as Nro 
-	from TArqueoCaja
-	order by NroArqueoCaja desc
-end
-go
 -----------------------------------------------------------------------------------------------------
 --------------TDocVenta Insertar --------------------------------------------------------------------
 if exists (select * from dbo.sysobjects where name ='spu_TDocVenta_Insertar')
@@ -913,10 +896,104 @@ end
 go
 
 /*********************************************************************************************************************/
-/**************************************		ARQUEO DE CAJA   ******************************************************/
+/**************************************		Arqueo de Caja    ******************************************************/
 /*********************************************************************************************************************/
-
-
+-----------------------------------------------------------------------------------------------------------------------
+--------------------------Ultima Arqueo de caja -------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_UltimoArqueoDeCaja')
+	drop procedure spu_UltimoArqueoDeCaja
+go
+create procedure spu_UltimoArqueoDeCaja
+as 
+begin
+	select top 1 (substring(NroArqueoCaja,0,7)+convert(varchar(10),(convert(int,substring(NroArqueoCaja,5,len(NroArqueoCaja)))+1))) as Nro 
+	from TArqueoCaja
+	order by NroArqueoCaja desc
+end
+go
+-----------------------------------------------------------------------------------------------------------------------
+--------------------------Verificar Arqueo de caja -------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_VerificarrqueoDeCaja')
+	drop procedure spu_VerificarArqueoCaja
+go
+create procedure spu_VerificarArqueoCaja
+	@CodUsuario varchar (10)
+as 
+begin
+	select *
+		from TArqueoCaja T
+		where T.Fecha=CONVERT(VARCHAR(10), GETDATE(), 103) and T.CodUsuario=@CodUsuario
+end
+go
+exec spu_VerificarArqueoCaja 'U0001'
+------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------- Cargar Datos de Arqueo de caja ----------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_CargarDatosContadoArqueoCaja')
+	drop procedure spu_CargarDatosContadoArqueoCaja
+go
+create procedure spu_CargarDatosContadoArqueoCaja
+	@CodUsuario varchar (10)
+as 
+begin
+	select D.NroDocVenta,Fecha,Tipo,TipoPago,sum(D.Cantidad*D.PrecioUnitario)as Total
+		from TDocVenta T inner join TDetalleVenta D on D.NroDocVenta=t.NroDocVenta
+		where T.Fecha=CONVERT(VARCHAR(10), GETDATE(), 103) and T.CodUsuario=@CodUsuario and T.TipoPago='CONTADO'
+		group by D.NroDocVenta,Fecha,Tipo,TipoPago
+end
+go
+------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------- Cargar Datos de Arqueo de caja ----------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_CargarDatosCreditoArqueoCaja')
+	drop procedure spu_CargarDatosCreditoArqueoCaja
+go
+create procedure spu_CargarDatosCreditoArqueoCaja
+	@CodUsuario varchar (10)
+as 
+begin
+	select T.NroDocVentaCredito ,T.NroDocVenta,D.Fecha,T.NroCuotas,D.CuotaActual,D.MontoPagado Total
+		from TDocVentaCredito T left outer join  TDetalleVentaCredito D on D.NroDocVentaCredito=T.NroDocVentaCredito
+		where D.Fecha=CONVERT(VARCHAR(10), GETDATE(), 103)  and D.CodUsuario=@CodUsuario
+end
+go
+-----------------------------------------------------------------------------------------------------
+--------------TArqueoCaja Insertar --------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name ='spu_TArqueoCaja_Insertar')
+	drop procedure spu_TArqueoCaja_Insertar
+go
+CREATE PROCEDURE spu_TArqueoCaja_Insertar
+	@NroArqueoCaja varchar(10),
+	@Fecha varchar (10),
+	@TotalSolesInicio float,
+	@TotalSolesFinal float,
+	@CodUsuario varchar(10)
+as
+begin
+-- validar codigo del cliente
+	IF (@NroArqueoCaja!='' and not exists (select * from TArqueoCaja where NroArqueoCaja=@NroArqueoCaja))
+	begin
+		-- validar nombres
+		IF (@Fecha!='')
+		begin
+			if(@TotalSolesInicio>0)
+			begin
+				if(@TotalSolesFinal>0)
+				begin
+					if(@CodUsuario!='' and  exists (select * from TUsuario where CodUsuario=@CodUsuario))
+						begin
+							insert into TArqueoCaja values (@NroArqueoCaja,@Fecha,@TotalSolesInicio,@TotalSolesFinal,@CodUsuario)
+							select CodError=0,Mensaje='Registro de Arqueo de caja insertado exitosamente'
+						end
+						select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
+				end
+				else select CodError=1,Mensaje='El campo de Total soles final  no debe estar vacio'
+			end
+			else select CodError=1,Mensaje='El campo de total soles inicial no debe estar vacio'
+		end
+		ELSE select CodError=1,Mensaje='El campo de fecha no debe estar vacio'
+	end
+	ELSE select  CodError=1,Mensaje='El NroArqueo de Caja no puede estar vacio o ya existe este codigo'
+END
+go 
 
 
 

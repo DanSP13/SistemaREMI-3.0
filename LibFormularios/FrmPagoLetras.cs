@@ -28,7 +28,7 @@ namespace LibFormularios
         public override string[] AsignarValoresAtributos()
         {
             return new string[] { TxtNroDocCredito.Text,TxtDocVenta.Text,TxtNroCuotas.Text
-                ,TxtFechaPago.Text,TxtObservaciones.Text,TxtEstado.Text};
+                ,dtpFechaFinalPago.Value.ToShortDateString().ToString(),TxtObservaciones.Text,TxtEstado.Text};
         }
         //-------------------------------------------------------------------
         //---Mostrar los datos de un registro -------------------------------
@@ -37,7 +37,7 @@ namespace LibFormularios
             TxtNroDocCredito.Text = aEntidad.ValorAtributo("NroDocVentaCredito");
             TxtDocVenta.Text = aEntidad.ValorAtributo("NroDocVenta");
             TxtNroCuotas.Text = aEntidad.ValorAtributo("NroCuotas");
-            TxtFechaPago.Text = aEntidad.ValorAtributo("FechaPago");
+            dtpFechaFinalPago.Text = aEntidad.ValorAtributo("FechaPago");
             TxtObservaciones.Text = aEntidad.ValorAtributo("Observaciones");
             TxtEstado.Text = aEntidad.ValorAtributo("Estado");
             MostrarDatosCalculables();
@@ -82,7 +82,6 @@ namespace LibFormularios
         {
             TxtDocVenta.Text = "";
             TxtNroCuotas.Text = "";
-            TxtFechaPago.Text = "";
             TxtObservaciones.Text = "";
             TxtEstado.Text = "";
             MostrarDetalleVentaCredito(TxtNroDocCredito.Text);
@@ -213,11 +212,13 @@ namespace LibFormularios
         }
         public void IniciarDocPagoLetras(string DocVenta,string Monto,string Fecha,string Total)
         {
+            GenerarNroDoc();
             TxtDocVenta.Text = DocVenta;
             TxtMonto.Text = Monto;
             TxtMontoTotal.Text = Total;
             TxtFecha.Text = Fecha;
         }
+
         public void LimpiarTodo()
         {
             //Limpiar todo el formulario 
@@ -246,7 +247,7 @@ namespace LibFormularios
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
@@ -256,7 +257,10 @@ namespace LibFormularios
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+            CDocVenta DV = new CDocVenta();
+            DV.Insertar();
             this.Close();
         }
+
     }
 }

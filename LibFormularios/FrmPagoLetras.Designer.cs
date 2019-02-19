@@ -41,15 +41,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.TxtNroDocCredito = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.TxtCodCliente = new System.Windows.Forms.TextBox();
+            this.TxtDNI = new System.Windows.Forms.TextBox();
             this.BtnBuscar = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.BtnVerDocVenta = new System.Windows.Forms.Button();
             this.DgvDetalleLetras = new System.Windows.Forms.DataGridView();
             this.label9 = new System.Windows.Forms.Label();
-            this.TxtMonto = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.TxtFechaPago = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.TxtMontoTotal = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -58,6 +56,8 @@
             this.TxtTotal = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.Timer2 = new System.Windows.Forms.Timer(this.components);
+            this.TxtMonto = new System.Windows.Forms.TextBox();
+            this.dtpFechaFinalPago = new System.Windows.Forms.DateTimePicker();
             this.PanTitulo.SuspendLayout();
             this.PanDataView.SuspendLayout();
             this.PanDatos.SuspendLayout();
@@ -79,18 +79,18 @@
             // 
             // PanDatos
             // 
+            this.PanDatos.Controls.Add(this.dtpFechaFinalPago);
             this.PanDatos.Controls.Add(this.TxtSaldo);
             this.PanDatos.Controls.Add(this.label12);
             this.PanDatos.Controls.Add(this.TxtMontoTotal);
             this.PanDatos.Controls.Add(this.label11);
-            this.PanDatos.Controls.Add(this.TxtFechaPago);
             this.PanDatos.Controls.Add(this.label10);
             this.PanDatos.Controls.Add(this.TxtMonto);
             this.PanDatos.Controls.Add(this.label9);
             this.PanDatos.Controls.Add(this.BtnVerDocVenta);
             this.PanDatos.Controls.Add(this.label8);
             this.PanDatos.Controls.Add(this.BtnBuscar);
-            this.PanDatos.Controls.Add(this.TxtCodCliente);
+            this.PanDatos.Controls.Add(this.TxtDNI);
             this.PanDatos.Controls.Add(this.TxtEstado);
             this.PanDatos.Controls.Add(this.label7);
             this.PanDatos.Controls.Add(this.TxtObservaciones);
@@ -213,12 +213,12 @@
             this.label3.TabIndex = 37;
             this.label3.Text = "N° Venta Credito:";
             // 
-            // TxtCodCliente
+            // TxtDNI
             // 
-            this.TxtCodCliente.Location = new System.Drawing.Point(124, 10);
-            this.TxtCodCliente.Name = "TxtCodCliente";
-            this.TxtCodCliente.Size = new System.Drawing.Size(200, 20);
-            this.TxtCodCliente.TabIndex = 48;
+            this.TxtDNI.Location = new System.Drawing.Point(124, 10);
+            this.TxtDNI.Name = "TxtDNI";
+            this.TxtDNI.Size = new System.Drawing.Size(200, 20);
+            this.TxtDNI.TabIndex = 48;
             // 
             // BtnBuscar
             // 
@@ -267,13 +267,6 @@
             this.label9.TabIndex = 52;
             this.label9.Text = "Monto a Pagar:";
             // 
-            // TxtMonto
-            // 
-            this.TxtMonto.Location = new System.Drawing.Point(124, 134);
-            this.TxtMonto.Name = "TxtMonto";
-            this.TxtMonto.Size = new System.Drawing.Size(200, 20);
-            this.TxtMonto.TabIndex = 53;
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -282,13 +275,6 @@
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 54;
             this.label10.Text = "Fecha de Pago:";
-            // 
-            // TxtFechaPago
-            // 
-            this.TxtFechaPago.Location = new System.Drawing.Point(124, 170);
-            this.TxtFechaPago.Name = "TxtFechaPago";
-            this.TxtFechaPago.Size = new System.Drawing.Size(200, 20);
-            this.TxtFechaPago.TabIndex = 55;
             // 
             // label11
             // 
@@ -352,6 +338,20 @@
             this.Timer2.Enabled = true;
             this.Timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
+            // TxtMonto
+            // 
+            this.TxtMonto.Location = new System.Drawing.Point(124, 134);
+            this.TxtMonto.Name = "TxtMonto";
+            this.TxtMonto.Size = new System.Drawing.Size(200, 20);
+            this.TxtMonto.TabIndex = 53;
+            // 
+            // dtpFechaFinalPago
+            // 
+            this.dtpFechaFinalPago.Location = new System.Drawing.Point(124, 169);
+            this.dtpFechaFinalPago.Name = "dtpFechaFinalPago";
+            this.dtpFechaFinalPago.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFinalPago.TabIndex = 60;
+            // 
             // FrmPagoLetras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,7 +382,7 @@
         private System.Windows.Forms.Button BtnVerDocVenta;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button BtnBuscar;
-        private System.Windows.Forms.TextBox TxtCodCliente;
+        private System.Windows.Forms.TextBox TxtDNI;
         private System.Windows.Forms.TextBox TxtEstado;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox TxtObservaciones;
@@ -395,9 +395,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TxtNroDocCredito;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox TxtMonto;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox TxtFechaPago;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox TxtSaldo;
         private System.Windows.Forms.Label label12;
@@ -407,5 +405,7 @@
         private System.Windows.Forms.TextBox TxtTotal;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Timer Timer2;
+        private System.Windows.Forms.DateTimePicker dtpFechaFinalPago;
+        private System.Windows.Forms.TextBox TxtMonto;
     }
 }

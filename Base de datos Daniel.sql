@@ -776,9 +776,9 @@ go
 create procedure spu_UltimoNroDocVentaCredito
 as 
 begin
-	select top 1 (substring(NroDocVenta,0,7)+convert(varchar(10),(convert(int,substring(NroDocVenta,5,len(NroDocVenta)))+1))) as Nro 
-	from TDocVenta
-	order by NroDocVenta desc
+	select top 1 (substring(NroDocVentaCredito,0,7)+convert(varchar(10),(convert(int,substring(NroDocVentaCredito,5,len(NroDocVentaCredito)))+1))) as Nro 
+	from TDocVentaCredito
+	order by NroDocVentaCredito desc
 end
 go
 
@@ -1156,3 +1156,6 @@ insert into TDetalleVentaCredito values('BC-00015','1','23/02/2019','U0001','100
 insert into TArqueoCaja values('AC-00001','12/01/2018',100,3547,'U0001')
 insert into TArqueoCaja values('AC-00002','12/01/2018',100,3547,'U0001')
 
+
+
+exec spu_UltimoNroDocVentaCredito

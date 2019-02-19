@@ -46,11 +46,15 @@
             this.DgvProductos = new System.Windows.Forms.DataGridView();
             this.CboSeries = new System.Windows.Forms.ComboBox();
             this.BtnAgregarSerie = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.RdbSiSerie = new System.Windows.Forms.RadioButton();
+            this.RdbNoSerie = new System.Windows.Forms.RadioButton();
             this.PanTitulo.SuspendLayout();
             this.PanDataView.SuspendLayout();
             this.PanDatos.SuspendLayout();
             this.PanBotones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProductos)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -63,6 +67,7 @@
             // 
             // PanDatos
             // 
+            this.PanDatos.Controls.Add(this.groupBox1);
             this.PanDatos.Controls.Add(this.BtnAgregarSerie);
             this.PanDatos.Controls.Add(this.CboSeries);
             this.PanDatos.Controls.Add(this.label3);
@@ -101,16 +106,16 @@
             // 
             // TxtDescripcion
             // 
-            this.TxtDescripcion.Location = new System.Drawing.Point(403, 27);
+            this.TxtDescripcion.Location = new System.Drawing.Point(403, 71);
             this.TxtDescripcion.Multiline = true;
             this.TxtDescripcion.Name = "TxtDescripcion";
-            this.TxtDescripcion.Size = new System.Drawing.Size(284, 84);
+            this.TxtDescripcion.Size = new System.Drawing.Size(284, 72);
             this.TxtDescripcion.TabIndex = 75;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(400, 11);
+            this.label9.Location = new System.Drawing.Point(402, 55);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 74;
@@ -120,7 +125,7 @@
             // 
             this.TxtStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtStock.Enabled = false;
-            this.TxtStock.Location = new System.Drawing.Point(457, 125);
+            this.TxtStock.Location = new System.Drawing.Point(457, 148);
             this.TxtStock.Name = "TxtStock";
             this.TxtStock.Size = new System.Drawing.Size(230, 20);
             this.TxtStock.TabIndex = 72;
@@ -168,7 +173,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(400, 128);
+            this.label6.Location = new System.Drawing.Point(400, 151);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(41, 13);
             this.label6.TabIndex = 67;
@@ -249,6 +254,41 @@
             this.BtnAgregarSerie.UseVisualStyleBackColor = true;
             this.BtnAgregarSerie.Click += new System.EventHandler(this.BtnAgregarSerie_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.RdbSiSerie);
+            this.groupBox1.Controls.Add(this.RdbNoSerie);
+            this.groupBox1.Location = new System.Drawing.Point(405, 11);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(281, 41);
+            this.groupBox1.TabIndex = 83;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Serie";
+            // 
+            // RdbSiSerie
+            // 
+            this.RdbSiSerie.AutoSize = true;
+            this.RdbSiSerie.Location = new System.Drawing.Point(83, 18);
+            this.RdbSiSerie.Name = "RdbSiSerie";
+            this.RdbSiSerie.Size = new System.Drawing.Size(35, 17);
+            this.RdbSiSerie.TabIndex = 1;
+            this.RdbSiSerie.TabStop = true;
+            this.RdbSiSerie.Text = "SI";
+            this.RdbSiSerie.UseVisualStyleBackColor = true;
+            this.RdbSiSerie.CheckedChanged += new System.EventHandler(this.RdbSiSerie_CheckedChanged);
+            // 
+            // RdbNoSerie
+            // 
+            this.RdbNoSerie.AutoSize = true;
+            this.RdbNoSerie.Location = new System.Drawing.Point(6, 18);
+            this.RdbNoSerie.Name = "RdbNoSerie";
+            this.RdbNoSerie.Size = new System.Drawing.Size(41, 17);
+            this.RdbNoSerie.TabIndex = 0;
+            this.RdbNoSerie.TabStop = true;
+            this.RdbNoSerie.Text = "NO";
+            this.RdbNoSerie.UseVisualStyleBackColor = true;
+            this.RdbNoSerie.CheckedChanged += new System.EventHandler(this.RdbNoSerie_CheckedChanged);
+            // 
             // FrmProductos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +303,8 @@
             this.PanDatos.PerformLayout();
             this.PanBotones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvProductos)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -287,5 +329,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox CboSeries;
         private System.Windows.Forms.Button BtnAgregarSerie;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton RdbSiSerie;
+        private System.Windows.Forms.RadioButton RdbNoSerie;
     }
 }

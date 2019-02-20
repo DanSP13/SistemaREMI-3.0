@@ -64,7 +64,10 @@
             this.T = new System.Windows.Forms.GroupBox();
             this.RdbContado = new System.Windows.Forms.RadioButton();
             this.RdbCredito = new System.Windows.Forms.RadioButton();
-            this.btnAgregarCliente = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.TxtDNIBusqueda = new System.Windows.Forms.TextBox();
+            this.BtnBuscarDNI = new System.Windows.Forms.Button();
+            this.BtnAgregarNuevoCliente = new System.Windows.Forms.Button();
             this.PanDetalleProductos.SuspendLayout();
             this.PanProductos.SuspendLayout();
             this.PanCliente.SuspendLayout();
@@ -79,8 +82,8 @@
             // PanDetalleProductos
             // 
             this.PanDetalleProductos.Controls.Add(this.DgvDetalleVentas);
-            this.PanDetalleProductos.Location = new System.Drawing.Point(7, 417);
-            this.PanDetalleProductos.Size = new System.Drawing.Size(680, 170);
+            this.PanDetalleProductos.Location = new System.Drawing.Point(7, 427);
+            this.PanDetalleProductos.Size = new System.Drawing.Size(680, 160);
             // 
             // PanProductos
             // 
@@ -103,12 +106,15 @@
             this.PanProductos.Controls.Add(this.label19);
             this.PanProductos.Controls.Add(this.TxtCodProducto);
             this.PanProductos.Controls.Add(this.label9);
-            this.PanProductos.Location = new System.Drawing.Point(6, 242);
-            this.PanProductos.Size = new System.Drawing.Size(681, 169);
+            this.PanProductos.Location = new System.Drawing.Point(7, 263);
+            this.PanProductos.Size = new System.Drawing.Size(681, 158);
             // 
             // PanCliente
             // 
-            this.PanCliente.Controls.Add(this.btnAgregarCliente);
+            this.PanCliente.Controls.Add(this.BtnAgregarNuevoCliente);
+            this.PanCliente.Controls.Add(this.BtnBuscarDNI);
+            this.PanCliente.Controls.Add(this.TxtDNIBusqueda);
+            this.PanCliente.Controls.Add(this.label17);
             this.PanCliente.Controls.Add(this.TxtTelefono);
             this.PanCliente.Controls.Add(this.label8);
             this.PanCliente.Controls.Add(this.TxtEmail);
@@ -122,7 +128,7 @@
             this.PanCliente.Controls.Add(this.TxtCodCliente);
             this.PanCliente.Controls.Add(this.label3);
             this.PanCliente.Location = new System.Drawing.Point(5, 144);
-            this.PanCliente.Size = new System.Drawing.Size(681, 92);
+            this.PanCliente.Size = new System.Drawing.Size(681, 113);
             // 
             // PanDetalleDoc
             // 
@@ -136,14 +142,24 @@
             this.PanDetalleDoc.Controls.SetChildIndex(this.pictureBox1, 0);
             this.PanDetalleDoc.Controls.SetChildIndex(this.T, 0);
             // 
+            // BtnNuevo
+            // 
+            this.BtnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
+            // 
+            // BtnBuscarDoc
+            // 
+            this.BtnBuscarDoc.Click += new System.EventHandler(this.BtnBuscarDoc_Click);
+            // 
             // TxtFecha
             // 
-            this.TxtFecha.Text = "13/02/2019 16:12:20";
+            this.TxtFecha.Location = new System.Drawing.Point(369, 51);
+            this.TxtFecha.Text = "20/02/2019 00:10:37";
             // 
             // PanBotones
             // 
             this.PanBotones.Controls.Add(this.BtnPagoLetras);
             this.PanBotones.Location = new System.Drawing.Point(6, 593);
+            this.PanBotones.Controls.SetChildIndex(this.LblIGV, 0);
             this.PanBotones.Controls.SetChildIndex(this.TxtTotalLetra, 0);
             this.PanBotones.Controls.SetChildIndex(this.TxtSubTotal, 0);
             this.PanBotones.Controls.SetChildIndex(this.TxtIGV, 0);
@@ -166,36 +182,38 @@
             // RdbFactura
             // 
             this.RdbFactura.Location = new System.Drawing.Point(69, 16);
+            this.RdbFactura.CheckedChanged += new System.EventHandler(this.RdbFactura_CheckedChanged);
             // 
             // RdbBoleta
             // 
             this.RdbBoleta.Location = new System.Drawing.Point(8, 16);
+            this.RdbBoleta.CheckedChanged += new System.EventHandler(this.RdbBoleta_CheckedChanged);
             // 
             // DgvDetalleVentas
             // 
             this.DgvDetalleVentas.AllowUserToAddRows = false;
             this.DgvDetalleVentas.AllowUserToDeleteRows = false;
             this.DgvDetalleVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvDetalleVentas.Location = new System.Drawing.Point(8, 8);
+            this.DgvDetalleVentas.Location = new System.Drawing.Point(7, 10);
             this.DgvDetalleVentas.Name = "DgvDetalleVentas";
             this.DgvDetalleVentas.ReadOnly = true;
-            this.DgvDetalleVentas.Size = new System.Drawing.Size(661, 155);
+            this.DgvDetalleVentas.Size = new System.Drawing.Size(661, 147);
             this.DgvDetalleVentas.TabIndex = 0;
             // 
             // TxtCodCliente
             // 
             this.TxtCodCliente.BackColor = System.Drawing.Color.SandyBrown;
-            this.TxtCodCliente.Location = new System.Drawing.Point(122, 11);
-            this.TxtCodCliente.MaxLength = 11;
+            this.TxtCodCliente.Location = new System.Drawing.Point(123, 32);
+            this.TxtCodCliente.MaxLength = 6;
             this.TxtCodCliente.Name = "TxtCodCliente";
-            this.TxtCodCliente.Size = new System.Drawing.Size(180, 20);
+            this.TxtCodCliente.Size = new System.Drawing.Size(217, 20);
             this.TxtCodCliente.TabIndex = 10;
             this.TxtCodCliente.Leave += new System.EventHandler(this.TxtCodCliente_Leave);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 14);
+            this.label3.Location = new System.Drawing.Point(21, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(96, 13);
             this.label3.TabIndex = 11;
@@ -204,7 +222,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 40);
+            this.label4.Location = new System.Drawing.Point(21, 61);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 12;
@@ -213,7 +231,7 @@
             // TxtDNI
             // 
             this.TxtDNI.Enabled = false;
-            this.TxtDNI.Location = new System.Drawing.Point(122, 37);
+            this.TxtDNI.Location = new System.Drawing.Point(123, 58);
             this.TxtDNI.Name = "TxtDNI";
             this.TxtDNI.Size = new System.Drawing.Size(217, 20);
             this.TxtDNI.TabIndex = 13;
@@ -221,7 +239,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 66);
+            this.label5.Location = new System.Drawing.Point(17, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(94, 13);
             this.label5.TabIndex = 14;
@@ -230,7 +248,7 @@
             // TxtNombre
             // 
             this.TxtNombre.Enabled = false;
-            this.TxtNombre.Location = new System.Drawing.Point(122, 63);
+            this.TxtNombre.Location = new System.Drawing.Point(123, 84);
             this.TxtNombre.Name = "TxtNombre";
             this.TxtNombre.Size = new System.Drawing.Size(217, 20);
             this.TxtNombre.TabIndex = 15;
@@ -238,7 +256,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(367, 14);
+            this.label6.Location = new System.Drawing.Point(368, 35);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 16;
@@ -247,7 +265,7 @@
             // TxtDireccion
             // 
             this.TxtDireccion.Enabled = false;
-            this.TxtDireccion.Location = new System.Drawing.Point(439, 11);
+            this.TxtDireccion.Location = new System.Drawing.Point(440, 32);
             this.TxtDireccion.Name = "TxtDireccion";
             this.TxtDireccion.Size = new System.Drawing.Size(217, 20);
             this.TxtDireccion.TabIndex = 17;
@@ -255,7 +273,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(367, 40);
+            this.label7.Location = new System.Drawing.Point(368, 61);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 18;
@@ -264,7 +282,7 @@
             // TxtEmail
             // 
             this.TxtEmail.Enabled = false;
-            this.TxtEmail.Location = new System.Drawing.Point(439, 37);
+            this.TxtEmail.Location = new System.Drawing.Point(440, 58);
             this.TxtEmail.Name = "TxtEmail";
             this.TxtEmail.Size = new System.Drawing.Size(217, 20);
             this.TxtEmail.TabIndex = 19;
@@ -272,7 +290,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(367, 66);
+            this.label8.Location = new System.Drawing.Point(368, 87);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(52, 13);
             this.label8.TabIndex = 20;
@@ -281,7 +299,7 @@
             // TxtTelefono
             // 
             this.TxtTelefono.Enabled = false;
-            this.TxtTelefono.Location = new System.Drawing.Point(439, 63);
+            this.TxtTelefono.Location = new System.Drawing.Point(440, 84);
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(217, 20);
             this.TxtTelefono.TabIndex = 21;
@@ -290,10 +308,11 @@
             // 
             this.TxtCodProducto.BackColor = System.Drawing.Color.SandyBrown;
             this.TxtCodProducto.Location = new System.Drawing.Point(125, 13);
-            this.TxtCodProducto.MaxLength = 11;
+            this.TxtCodProducto.MaxLength = 5;
             this.TxtCodProducto.Name = "TxtCodProducto";
             this.TxtCodProducto.Size = new System.Drawing.Size(213, 20);
             this.TxtCodProducto.TabIndex = 12;
+            this.TxtCodProducto.Text = "P";
             this.TxtCodProducto.Leave += new System.EventHandler(this.TxtCodProducto_Leave);
             // 
             // label9
@@ -429,7 +448,7 @@
             // 
             this.BtnAgregar.Location = new System.Drawing.Point(438, 118);
             this.BtnAgregar.Name = "BtnAgregar";
-            this.BtnAgregar.Size = new System.Drawing.Size(215, 44);
+            this.BtnAgregar.Size = new System.Drawing.Size(215, 34);
             this.BtnAgregar.TabIndex = 95;
             this.BtnAgregar.Text = "Agregar";
             this.BtnAgregar.UseVisualStyleBackColor = true;
@@ -505,15 +524,42 @@
             this.RdbCredito.Text = "Credito";
             this.RdbCredito.UseVisualStyleBackColor = true;
             // 
-            // btnAgregarCliente
+            // label17
             // 
-            this.btnAgregarCliente.Location = new System.Drawing.Point(305, 9);
-            this.btnAgregarCliente.Name = "btnAgregarCliente";
-            this.btnAgregarCliente.Size = new System.Drawing.Size(35, 23);
-            this.btnAgregarCliente.TabIndex = 22;
-            this.btnAgregarCliente.Text = "B";
-            this.btnAgregarCliente.UseVisualStyleBackColor = true;
-            this.btnAgregarCliente.Click += new System.EventHandler(this.btnAgregarCliente_Click);
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(21, 9);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(83, 13);
+            this.label17.TabIndex = 23;
+            this.label17.Text = "Buscar por DNI:";
+            // 
+            // TxtDNIBusqueda
+            // 
+            this.TxtDNIBusqueda.Location = new System.Drawing.Point(123, 6);
+            this.TxtDNIBusqueda.Name = "TxtDNIBusqueda";
+            this.TxtDNIBusqueda.Size = new System.Drawing.Size(177, 20);
+            this.TxtDNIBusqueda.TabIndex = 24;
+            // 
+            // BtnBuscarDNI
+            // 
+            this.BtnBuscarDNI.Location = new System.Drawing.Point(306, 6);
+            this.BtnBuscarDNI.Name = "BtnBuscarDNI";
+            this.BtnBuscarDNI.Size = new System.Drawing.Size(35, 21);
+            this.BtnBuscarDNI.TabIndex = 25;
+            this.BtnBuscarDNI.Text = "IR";
+            this.BtnBuscarDNI.UseVisualStyleBackColor = true;
+            this.BtnBuscarDNI.Click += new System.EventHandler(this.BtnBuscarDNI_Click);
+            // 
+            // BtnAgregarNuevoCliente
+            // 
+            this.BtnAgregarNuevoCliente.Enabled = false;
+            this.BtnAgregarNuevoCliente.Location = new System.Drawing.Point(440, 2);
+            this.BtnAgregarNuevoCliente.Name = "BtnAgregarNuevoCliente";
+            this.BtnAgregarNuevoCliente.Size = new System.Drawing.Size(217, 26);
+            this.BtnAgregarNuevoCliente.TabIndex = 26;
+            this.BtnAgregarNuevoCliente.Text = "Agregar Cliente Nuevo";
+            this.BtnAgregarNuevoCliente.UseVisualStyleBackColor = true;
+            this.BtnAgregarNuevoCliente.Click += new System.EventHandler(this.BtnAgregarNuevoCliente_Click);
             // 
             // FrmDocVenta
             // 
@@ -578,6 +624,9 @@
         private System.Windows.Forms.GroupBox T;
         private System.Windows.Forms.RadioButton RdbContado;
         private System.Windows.Forms.RadioButton RdbCredito;
-        private System.Windows.Forms.Button btnAgregarCliente;
+        private System.Windows.Forms.Button BtnAgregarNuevoCliente;
+        private System.Windows.Forms.Button BtnBuscarDNI;
+        private System.Windows.Forms.TextBox TxtDNIBusqueda;
+        private System.Windows.Forms.Label label17;
     }
 }

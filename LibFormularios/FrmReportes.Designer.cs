@@ -38,9 +38,17 @@
             // CboReportes
             // 
             this.CboReportes.FormattingEnabled = true;
+            this.CboReportes.Items.AddRange(new object[] {
+            "Productos Mas Vendidos",
+            "Productos Menos Vendidos",
+            "Productos Sin Stock",
+            "Dias Mas Vendidos",
+            "Clientes Estrella",
+            "",
+            ""});
             this.CboReportes.Location = new System.Drawing.Point(115, 12);
             this.CboReportes.Name = "CboReportes";
-            this.CboReportes.Size = new System.Drawing.Size(423, 21);
+            this.CboReportes.Size = new System.Drawing.Size(395, 21);
             this.CboReportes.TabIndex = 0;
             this.CboReportes.SelectedIndexChanged += new System.EventHandler(this.CboReportes_SelectedIndexChanged);
             // 

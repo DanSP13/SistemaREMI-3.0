@@ -24,6 +24,15 @@ namespace LibClases
         {
             return 1;///Falta mejores 
         }
+
+        public object ProductosSinStock()
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuProductosSinStock";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
+        }
     }
 }
 

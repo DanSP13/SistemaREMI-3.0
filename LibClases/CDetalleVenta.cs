@@ -25,6 +25,24 @@ namespace LibClases
             return 2;///Falta mejores 
         }
 
+        public object ProductosMasVendidos()
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuProductosMasVendidos ";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
+        }
+
+        public object ProductosMenosVendidos()
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuProductosMasVendidos";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
+        }
+
         public object ListarPorCodigo(string nroDocVenta)
         {
             //retorna una tabla con la lista con las unidades de los productos

@@ -55,7 +55,6 @@
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Text = "REGISTRO DE CLIENTES";
             // 
             // PanDataView
@@ -137,6 +136,7 @@
             // TxtDireccion
             // 
             this.TxtDireccion.Location = new System.Drawing.Point(272, 123);
+            this.TxtDireccion.MaxLength = 50;
             this.TxtDireccion.Name = "TxtDireccion";
             this.TxtDireccion.Size = new System.Drawing.Size(259, 20);
             this.TxtDireccion.TabIndex = 45;
@@ -145,6 +145,7 @@
             // 
             this.TxtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtNombre.Location = new System.Drawing.Point(272, 97);
+            this.TxtNombre.MaxLength = 50;
             this.TxtNombre.Name = "TxtNombre";
             this.TxtNombre.Size = new System.Drawing.Size(259, 20);
             this.TxtNombre.TabIndex = 44;
@@ -153,6 +154,7 @@
             // 
             this.TxtDNI.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtDNI.Location = new System.Drawing.Point(272, 68);
+            this.TxtDNI.MaxLength = 8;
             this.TxtDNI.Name = "TxtDNI";
             this.TxtDNI.Size = new System.Drawing.Size(259, 20);
             this.TxtDNI.TabIndex = 43;
@@ -162,10 +164,12 @@
             this.TxtCodCliente.BackColor = System.Drawing.Color.SandyBrown;
             this.TxtCodCliente.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtCodCliente.Location = new System.Drawing.Point(272, 39);
-            this.TxtCodCliente.MaxLength = 11;
+            this.TxtCodCliente.MaxLength = 6;
             this.TxtCodCliente.Name = "TxtCodCliente";
             this.TxtCodCliente.Size = new System.Drawing.Size(259, 20);
             this.TxtCodCliente.TabIndex = 42;
+            this.TxtCodCliente.Text = "C";
+            this.TxtCodCliente.TextChanged += new System.EventHandler(this.TxtCodCliente_TextChanged);
             this.TxtCodCliente.Leave += new System.EventHandler(this.TxtCodCliente_Leave_1);
             // 
             // label8
@@ -216,6 +220,7 @@
             // TxtEmail
             // 
             this.TxtEmail.Location = new System.Drawing.Point(272, 149);
+            this.TxtEmail.MaxLength = 50;
             this.TxtEmail.Name = "TxtEmail";
             this.TxtEmail.Size = new System.Drawing.Size(259, 20);
             this.TxtEmail.TabIndex = 50;
@@ -232,6 +237,7 @@
             // TxtTelefono
             // 
             this.TxtTelefono.Location = new System.Drawing.Point(272, 175);
+            this.TxtTelefono.MaxLength = 10;
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(259, 20);
             this.TxtTelefono.TabIndex = 52;

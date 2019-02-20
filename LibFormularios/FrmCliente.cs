@@ -85,5 +85,15 @@ namespace LibFormularios
         {
             get { return TxtCodCliente.Text; }
         }
+
+        private void TxtCodCliente_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (!textBox.Text.StartsWith("C"))
+            {
+                textBox.Text = "C";
+                textBox.Select(textBox.Text.Length, 0);
+            }
+        }
     }
 }

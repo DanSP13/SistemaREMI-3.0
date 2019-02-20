@@ -995,8 +995,52 @@ begin
 END
 go 
 
-
-
+------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------- Cargar Datos de Arqueo de caja ----------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_IrCargarDatosContadoArqueoCaja')
+	drop procedure spu_IrCargarDatosContadoArqueoCaja
+go
+create procedure spu_IrCargarDatosContadoArqueoCaja
+	@NroArqueoCaja varchar(10),
+	@CodUsuario varchar (10)
+as 
+begin
+	select *
+		from TArqueoCaja A
+		where A.CodUsuario=@CodUsuario and A.NroArqueoCaja=@NroArqueoCaja
+end
+go
+------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------- Cargar Datos de Arqueo de caja ----------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_RecuperarCargarDatosContadoArqueoCaja')
+	drop procedure spu_RecuperarCargarDatosContadoArqueoCaja
+go
+create procedure spu_RecuperarCargarDatosContadoArqueoCaja
+	@Fecha varchar (10),
+	@CodUsuario varchar (10)
+as 
+begin
+	select D.NroDocVenta,Fecha,Tipo,TipoPago,sum(D.Cantidad*D.PrecioUnitario)as Total
+		from TDocVenta T inner join TDetalleVenta D on D.NroDocVenta=t.NroDocVenta
+		where T.Fecha=@Fecha and T.CodUsuario=@CodUsuario and T.TipoPago='CONTADO'
+		group by D.NroDocVenta,Fecha,Tipo,TipoPago
+end
+go
+------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------- Cargar Datos de Arqueo de caja ----------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name='spu_RecuperarCargarDatosCreditoArqueoCaja')
+	drop procedure spu_RecuperarCargarDatosCreditoArqueoCaja
+go
+create procedure spu_RecuperarCargarDatosCreditoArqueoCaja
+	@Fecha varchar (10),
+	@CodUsuario varchar (10)
+as 
+begin
+	select T.NroDocVentaCredito ,T.NroDocVenta,D.Fecha,T.NroCuotas,D.CuotaActual,D.MontoPagado Total
+		from TDocVentaCredito T left outer join  TDetalleVentaCredito D on D.NroDocVentaCredito=T.NroDocVentaCredito
+		where D.Fecha=@Fecha  and D.CodUsuario=@CodUsuario
+end
+go
 /*********************************************************************************************************************/
 /**************************************		PRUEBAS     	    ******************************************************/
 /*********************************************************************************************************************/

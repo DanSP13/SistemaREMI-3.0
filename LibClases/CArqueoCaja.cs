@@ -18,7 +18,7 @@ namespace LibClases
         //-------Implementacion de Metodos Abstractos--
         public override string[] NombresAtributos()
         {
-            return new string[] { "CodArqueoCaja", "Fecha", "TotalSolesInicio", "TotalSolesFinal", "CodUsuario" };
+            return new string[] { "NroArqueoCaja", "Fecha", "TotalSolesInicio", "TotalSolesFinal", "CodUsuario" };
         }
         public override int NroDeClaves()
         {

@@ -1059,23 +1059,7 @@ begin
 		where D.Fecha=@Fecha  and D.CodUsuario=@CodUsuario
 end
 go
-/*********************************************************************************************************************/
-/**************************************		PRUEBAS     	    ******************************************************/
-/*********************************************************************************************************************/
-insert into TUsuario values('U0001','1234','73874898','Jose Rodriguez','12','998524398','VENDEDOR','HABIL')
-insert into TUsuario values('U0002','1234','73874899','Leandro Tito','12','998524398','GERENTE','HABIL')
-insert into TProducto values('P0006','TV','TV 4k ultrahd','LG','LGTY56165',2,1245)
-insert into TSerieProducto values('P0006','451785221562')
-insert into TSerieProducto values('P0006','756551264646')
-insert into TCliente values('C00007','45784129','Danz defer','Jr.Yupanqui','daniel@gmail.com','988574521')
-insert into TDocVenta values('BV-000007','03/03/2017','BOLETA','CONTADO','C00007','U0001')
-insert into TDetalleVenta values('BV-000007','P0006','451785221562',1,1245)
-insert into TDocVentaCredito values('BC-00007','BV-000007','6','11/02/2019','','Activo')
-insert into TDetalleVentaCredito values('BC-00007','1','11,01,2019','U0001','254')
-insert into TArqueoCaja values ('AC-000001','03/03/2017',2490,2490,'U0001')
-select * from TSerieProducto
-select * from TDocVenta
-select * from TDetalleVenta
+
 -----------------SPUs de los Resportes ----------------------
 --------------------------------------------------------------
 -----SPU para saber que productos estan sin stock-------------
@@ -1090,15 +1074,17 @@ begin
 	where Stock=0
 end
 go
---------SPU para saber los Productos
 
+/*********************************************************************************************************************/
+/**************************************		PRUEBAS     	    ******************************************************/
+/*********************************************************************************************************************/
 -----------------Usuario ---------------------------
 ------Los tipo pueden ser Vendedor,Adminitrador y Gerente ----------
 ------Pero ssolo puede haber un administrador y Genrente-------
---insert into TUsuario values('U0001','SSDFS848S','73874898','JOSE RODRIGUEZ','32','998524398','VENDEDOR','HABI')
---insert into TUsuario values('U0002','SSDFS235S','34884658','ANDRES GARCIA','30','964829345','VENDEDOR','HABI')
-insert into TUsuario values('U0003','SSDFS785','73145986','DIEGO PEREZ','37','996657893','ADMINISTRADOR','HABIL')
-insert into TUsuario values('U0004','SSDFS479','56574893','MARIO GOMEZ','38','922347856','GERENTE','HABIL')
+insert into TUsuario values('U0001','1234','73874898','JOSE RODRIGUEZ','32','998524398','VENDEDOR','HABIL')
+insert into TUsuario values('U0002','1234','34884658','ANDRES GARCIA','30','964829345','VENDEDOR','HABIL')
+insert into TUsuario values('U0003','1234','73145986','DIEGO PEREZ','37','996657893','ADMINISTRADOR','HABIL')
+insert into TUsuario values('U0004','1234','56574893','MARIO GOMEZ','38','922347856','GERENTE','HABIL')
 
 
 ----------------Producto --------------------------------
@@ -1106,17 +1092,17 @@ insert into TProducto values('P0001','FREIDORA','Freidora AF1400','IMACO','AF140
 insert into TProducto values('P0002','OLLA ARROCERA','Olla cocción lenta 6,5L','iMACO','SLC065',5,200)
 insert into TProducto values('P0003','PARRILLA','Grill Panini','IMACO','IG2923',2,500)
 insert into TProducto values('P0004','LAVADORA','Lavadora de carga superior 22 kg','LG','TS2200DPSB',1,1000)
-insert into TProducto values('P0005','Cupcake Maker','Cupcake Maker','Blanik','BCCM012',9,100)
---insert into TProducto values('P0006','LAVADORA','Lavadora de carga superior 7 kg','LG','TS2600DPSB',5,600)
+insert into TProducto values('P0005','Cupcake Maker','Cupcake Maker','Blanik','BCCM012',0,100)
+insert into TProducto values('P0006','LAVADORA','Lavadora de carga superior 7 kg','LG','TS2600DPSB',0,600)
 insert into TProducto values('P0011','Sarten','Sartén eléctrica','Imaco','PES280',1,90)
-insert into TProducto values('P0007','Cocedor de Huevos','Cocedor de Huevos','Thomas','TH 80',7,80)
-insert into TProducto values('P0008','Máquina de Pop Corn','Máquina de Pop Corn Coca-Cola','Nostalgia','RHP310COKE',14,60)
-insert into TProducto values('P0009','Yogurt Maker','Yogurt Maker Pro','Blanik','BYMP048',8,100)
-insert into TProducto values('P0010','Blender','Mini Blender','Blanik','BMB044',2,100)
-insert into TProducto values('P0012','Pimer','Minipimer RMIN-989W','Recco','RMIN-989W',5,1)
-insert into TProducto values('P0014','TV','TV FULL HD','LG','LGTY56199',3,5245)
-insert into TProducto values('P0015','TV','TV 4K ULTRA HD','LG','LGTY56179',3,6000)
-insert into TProducto values('P0016','TV','TV HD','LG','LGTY56139',3,4560)
+insert into TProducto values('P0007','Cocedor de Huevos','Cocedor de Huevos','Thomas','TH 80',0,80)
+insert into TProducto values('P0008','Máquina de Pop Corn','Máquina de Pop Corn Coca-Cola','Nostalgia','RHP310COKE',0,60)
+insert into TProducto values('P0009','Yogurt Maker','Yogurt Maker Pro','Blanik','BYMP048',0,100)
+insert into TProducto values('P0010','Blender','Mini Blender','Blanik','BMB044',0,100)
+insert into TProducto values('P0012','Pimer','Minipimer RMIN-989W','Recco','RMIN-989W',0,100)
+insert into TProducto values('P0014','TV','TV FULL HD','LG','LGTY56199',5,5245)
+insert into TProducto values('P0015','TV','TV 4K ULTRA HD','LG','LGTY56179',8,6000)
+insert into TProducto values('P0016','TV','TV HD','LG','LGTY56139',6,4560)
 
 ---------------Series de lo productos--------------
 ---------Los se debe relacionar el codigo de los productos con sus respectiva serie 
@@ -1134,7 +1120,29 @@ insert into TSerieProducto values('P0002','752345678923')
 insert into TSerieProducto values('P0003','341745587863')
 insert into TSerieProducto values('P0003','746554677789')
 insert into TSerieProducto values('P0011','442455266647')
+
 insert into TSerieProducto values('P0004','766555678930')
+insert into TSerieProducto values('P0014','442455016647')
+insert into TSerieProducto values('P0014','442455026647')
+insert into TSerieProducto values('P0014','442455036647')
+insert into TSerieProducto values('P0014','442455046647')
+insert into TSerieProducto values('P0014','442455056647')
+
+insert into TSerieProducto values('P0015','806555678930')
+insert into TSerieProducto values('P0015','816555678930')
+insert into TSerieProducto values('P0015','826555678930')
+insert into TSerieProducto values('P0015','836555678930')
+insert into TSerieProducto values('P0015','846555678930')
+insert into TSerieProducto values('P0015','856555678930')
+insert into TSerieProducto values('P0015','866555678930')
+insert into TSerieProducto values('P0015','876555678930')
+insert into TSerieProducto values('P0016','441015266647')
+insert into TSerieProducto values('P0016','761025678930')
+insert into TSerieProducto values('P0016','441035266647')
+insert into TSerieProducto values('P0016','761045678930')
+insert into TSerieProducto values('P0016','441055266647')
+insert into TSerieProducto values('P0016','761065678930')
+
 
 --------------Clientes--------------------------------------
 insert into TCliente values('C00001','45782311','CHIMUELO PEREZ','JR YUPANQUI','ejemplo@gmail.com','988574521')
@@ -1143,7 +1151,7 @@ insert into TCliente values('C00003','23445452','PLAZA VEA','AV. CULTURA 1312','
 insert into TCliente values('C00004','34568452','TOTTUS','AV. CULTURA 1790','TOTTUS@gmail.com','987234452')
 insert into TCliente values('C00005','56778452','ORION','AV. CULTURA 4012','ORION@gmail.com','943734123')
 insert into TCliente values('C00006','45473452','LA CANASTA','AV. LA CULTURA 2312','LA_CANASTA@gmail.com','934523123')
---insert into TCliente values('C00007','12323456202','EL SOL','AV. LOS INCAS 2312','ELSOL@gmail.com','982131344')
+insert into TCliente values('C00007','12323456','EL SOL','AV. LOS INCAS 2312','ELSOL@gmail.com','982131344')
 insert into TCliente values('C00008','54535472','OXXO','SAN SEBASTIAN  U-2312','OXXO@gmail.com','934123424')
 insert into TCliente values('C00009','20194628','GATOS MARKET','AV. LOS INCAS 7012','GATOS@gmail.com','945233424')
 insert into TCliente values('C00010','20302132','ECONOMAX','AV. TUPAC AMARU 22','ECONOMAX@gmail.com','923454728')
@@ -1159,7 +1167,7 @@ insert into TDocVenta values('BV-000003','07/06/2018','BOLETA','CONTADO','C00001
 insert into TDocVenta values('BV-000004','28/06/2018','BOLETA','CREDITO','C00002','U0002')
 insert into TDocVenta values('BV-000005','01/07/2018','BOLETA','CREDITO','C00003','U0002')
 insert into TDocVenta values('BV-000006','24/08/2018','BOLETA','CONTADO','C00005','U0001')
----insert into TDocVenta values('BV-000007','12/09/2018','BOLETA','CONTADO','C00006','U0001')
+insert into TDocVenta values('BV-000007','12/09/2018','BOLETA','CONTADO','C00006','U0001')
 insert into TDocVenta values('BV-000008','01/10/2018','BOLETA','CONTADO','C00008','U0002')
 insert into TDocVenta values('BV-000009','12/11/2018','BOLETA','CREDITO','C00010','U0001')
 insert into TDocVenta values('FV-000010','23/11/2018','FACTURA','CONTADO','C00011','U0002')
@@ -1171,8 +1179,8 @@ insert into TDocVenta values('BV-000015','27/01/2018','BOLETA','CONTADO','C00007
 
 -------------TDetalleVenta-------------
 -----------Debe estar el codigo del producto con su rspectiva serie---------
-insert into TDetalleVenta values('BV-000001','P0006','451785221562',2,1245)
-insert into TDetalleVenta values('BV-000001','P0002','679051264646',2,200)
+insert into TDetalleVenta values('BV-000001','P0006','451785221562',2,600)
+insert into TDetalleVenta values('BV-000001','P0002','679051264646',2,599)
 insert into TDetalleVenta values('BV-000002','P0003','254785212345',3,5000)
 insert into TDetalleVenta values('BV-000002','P0005','781745587863',1,500)
 insert into TDetalleVenta values('BV-000002','P0011','442455266647',2,700)
@@ -1197,16 +1205,13 @@ insert into TDetalleVenta values('BV-000015','P0007','451785212345',7,120)
 ------------Las observacion pueden estar en blanco y si tienen contenido deben ---------
 ------Decir por ejemplo : El docVenta esat congelado porque el cliente tubo un accidente-----
 ------y no podra pagar las letras correspondienetes-----------
---insert into TDocVentaCredito values('BC-00007','BV-000007','3','11/02/2019','','ACTIVO')
+insert into TDocVentaCredito values('BC-00007','BV-000002','3','11/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00005','BV-000005','2','07/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00004','BV-000004','3','05/02/2019','','ACTIVO')
-insert into TDocVentaCredito values('BC-00003','BV-000003','1','04/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00009','BV-000009','2','11/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00012','BV-000012','3','17/01/2019','','ACTIVO')
-insert into TDocVentaCredito values('BC-00011','FV-000011','1','19/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00014','BV-000014','2','21/02/2019','','ACTIVO')
-insert into TDocVentaCredito values('BC-00015','BV-000015','1','23/02/2019','','ACTIVO')
-exec spu_TDocVentaCredito_Insertar 'BC-00016','BV-000015','1','23/02/2019','','ACTIVO'
+
 
 ------------TDetalleVentaCredito --------------------------------------
 ---El Numero de datos a insertar debe coincidir con el nro de cuotas de la tabla anterior---------
@@ -1214,12 +1219,10 @@ exec spu_TDocVentaCredito_Insertar 'BC-00016','BV-000015','1','23/02/2019','','A
 insert into TDetalleVentaCredito values('BC-00007','1','11/02/2019','U0001','254')
 insert into TDetalleVentaCredito values('BC-00005','1','07/02/2019','U0002','100')
 insert into TDetalleVentaCredito values('BC-00004','1','05/02/2019','U0002','80')
-insert into TDetalleVentaCredito values('BC-00003','1','04/02/2019','U0001','70')
 insert into TDetalleVentaCredito values('BC-00009','1','11/01/2019','U0001','120')
 insert into TDetalleVentaCredito values('BC-00012','1','17/01/2019','U0001','110')
-insert into TDetalleVentaCredito values('BC-00011','1','19/01/2019','U0002','90')
 insert into TDetalleVentaCredito values('BC-00014','1','21/02/2019','U0002','50')
-insert into TDetalleVentaCredito values('BC-00015','1','23/02/2019','U0001','100')
+
 
 
 
@@ -1227,7 +1230,17 @@ insert into TDetalleVentaCredito values('BC-00015','1','23/02/2019','U0001','100
 ---Debe tener relacion con todas la ventas hechas sin importar el tipo -----
 ----------de una determinada fecha por ejemplo:todas las ventas de 12/01/2018----
 ----deben recuadar una cantidad que sumada mas los soles de inicio deben dar solesfinal----------
-insert into TArqueoCaja values('AC-00001','12/01/2018',100,3547,'U0001')
-insert into TArqueoCaja values('AC-00002','12/01/2018',100,3547,'U0001')
-
-select * from TCliente
+insert into TArqueoCaja values('AC-00001','20/01/2018',2400,2440,'U0001')
+insert into TArqueoCaja values('AC-00002','24/01/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00003','27/01/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00005','03/03/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00006','07/06/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00007','28/06/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00008','01/07/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00009','24/08/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00010','12/09/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00011','01/10/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00012','12/11/2018',100,3547,'U0001')
+insert into TArqueoCaja values('AC-00013','23/11/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00014','05/12/2018',100,3547,'U0002')
+insert into TArqueoCaja values('AC-00015','31/12/2018',100,3547,'U0001')

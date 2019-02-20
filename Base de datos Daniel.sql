@@ -695,7 +695,7 @@ CREATE PROCEDURE spu_TDocVentaCredito_Insertar
 as
 begin
 -- validar codigo del cliente
-	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
 	begin
 		-- validar NroDocVenta
 		IF (@NroDocVenta!='')
@@ -736,7 +736,7 @@ CREATE PROCEDURE spu_TDocVentaCredito_Actualizar
 as
 begin
 -- validar codigo del cliente
-	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
 	begin
 		-- validar NroDocVenta
 		IF (@NroDocVenta!='')
@@ -882,10 +882,10 @@ end
 go
 
 --------------------------------	Listar DocventacreditoDetalle	------------------------------------
-if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Actualizar')
-	drop procedure spu_TDetalleVentaCredito_Actualizar
+if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Listar')
+	drop procedure spu_TDetalleVentaCredito_Listar
 go
-CREATE PROCEDURE spu_TDetalleVentaCredito_Actualizar
+CREATE PROCEDURE spu_TDetalleVentaCredito_Listar
 	@NroDocVentaCredito varchar(10)
 as
 begin
@@ -1133,6 +1133,7 @@ insert into TDocVentaCredito values('BC-00012','BV-000012','3','17/01/2019','','
 insert into TDocVentaCredito values('BC-00011','BV-000011','1','19/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00014','BV-000014','2','21/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00015','BV-000015','1','23/02/2019','','ACTIVO')
+exec spu_TDocVentaCredito_Insertar 'BC-00016','BV-000015','1','23/02/2019','','ACTIVO'
 
 ------------TDetalleVentaCredito --------------------------------------
 ---El Numero de datos a insertar debe coincidir con el nro de cuotas de la tabla anterior---------

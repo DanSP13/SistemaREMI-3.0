@@ -110,10 +110,6 @@
             // 
             this.PanBotones.Location = new System.Drawing.Point(0, 294);
             // 
-            // BtnGuardar
-            // 
-            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
-            // 
             // TxtEstado
             // 
             this.TxtEstado.Location = new System.Drawing.Point(440, 170);

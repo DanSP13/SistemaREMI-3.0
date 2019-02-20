@@ -627,7 +627,7 @@ begin
 							insert into TDocVenta values (@NroDocVenta,@Fecha,@Tipo,@TipoPago,@CodCliente,@CodUsuario)
 							select CodError=0,Mensaje='Registro de Documento Venta insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
 					end
 					else select CodError=1,Mensaje='El campo de Codigo del Cliente no debe estar vacio'
 				end
@@ -710,7 +710,7 @@ begin
 							insert into TDocVentaCredito values(@NroDocVentaCredito,@NroDocVenta,@NroCuotas,@FechaPago,@Observaciones,@Estado)
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
 				end
 				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end
@@ -812,7 +812,7 @@ CREATE PROCEDURE spu_TDetalleVentaCredito_Insertar
 	@MontoPagado float
 as 
 begin
-	IF (@NroDocVentaCredito!='' and exists (select * from TDetalleVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDetalleVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
 	begin
 		-- validar nombres
 		IF (@CuotaActual>0)
@@ -1020,8 +1020,8 @@ select * from TDetalleVenta
 ------Pero ssolo puede haber un administrador y Genrente-------
 --insert into TUsuario values('U0001','SSDFS848S','73874898','JOSE RODRIGUEZ','32','998524398','VENDEDOR','HABI')
 --insert into TUsuario values('U0002','SSDFS235S','34884658','ANDRES GARCIA','30','964829345','VENDEDOR','HABI')
-insert into TUsuario values('U0003','SSDFS785','73145986','DIEGO PEREZ','37','996657893','ADMINISTRADOR','HABIL')
-insert into TUsuario values('U0004','SSDFS479','56574893','MARIO GOMEZ','38','922347856','GERENTE','HABIL')
+insert into TUsuario values('U0003','1234','73145986','DIEGO PEREZ','37','996657893','ADMINISTRADOR','HABIL')
+insert into TUsuario values('U0004','1234','56574893','MARIO GOMEZ','38','922347856','GERENTE','HABIL')
 
 
 ----------------Producto --------------------------------
@@ -1133,7 +1133,7 @@ insert into TDocVentaCredito values('BC-00012','BV-000012','3','17/01/2019','','
 insert into TDocVentaCredito values('BC-00011','BV-000011','1','19/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00014','BV-000014','2','21/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00015','BV-000015','1','23/02/2019','','ACTIVO')
-exec spu_TDocVentaCredito_Insertar 'BC-00016','BV-000015','1','23/02/2019','','ACTIVO'
+exec spu_TDocVentaCredito_Insertar 'BC-00019','BV-000015','1','23/02/2019','','ACTIVO'
 
 ------------TDetalleVentaCredito --------------------------------------
 ---El Numero de datos a insertar debe coincidir con el nro de cuotas de la tabla anterior---------
@@ -1158,5 +1158,7 @@ insert into TArqueoCaja values('AC-00001','12/01/2018',100,3547,'U0001')
 insert into TArqueoCaja values('AC-00002','12/01/2018',100,3547,'U0001')
 
 
+EXEC spu_TDocVenta_Insertar 'BV-000022','20/02/2019 07:48:35','BOLETA','CREDITO','C00007','u0001'
 
-exec spu_UltimoNroDocVentaCredito
+select * From TDocVentaCredito
+select * from TDocVenta

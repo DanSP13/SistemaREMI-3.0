@@ -14,12 +14,13 @@ namespace LibFormularios
         CCliente aCliente = new CCliente();
         CProducto aProducto = new CProducto();
         public string aCodUsuario="";
-        public FrmDocVenta()
+        public FrmDocVenta(string CodUsuario)
         {
             InitializeComponent();
             IniciarEntidad(new CDocVenta());
             GenerarNroDoc("BOLETA");
             FormatearGridProductos();
+            aCodUsuario = CodUsuario;
         }
         public void FormatearGridProductos()
         {
@@ -473,20 +474,37 @@ namespace LibFormularios
         {
             TxtCantidad.Text = "1";
         }
-
+        private string RetornarTipo()
+        {
+            if (RdbFactura.Checked == true) return "FACTURA";
+            else  return "BOLETA";
+        }
+        private string Retornar_Tipo_Pago()
+        {
+            if (RdbContado.Checked == true) return "CONTADO";
+            else return "CREDITO";
+        }
         private void BtnPagoLetras_Click(object sender, EventArgs e)
         {
+            BtnGuardar.PerformClick();
             FrmPagoLetras Raioz = new FrmPagoLetras();
-            float mitad = 0;
+            double mitad = 0;
             Raioz.IniciarDocPagoLetras(TxtNroDoc.Text, mitad.ToString()
-                , string.Format(DateTime.Now.ToString()), TxtTotal.Text);
+                , string.Format(DateTime.Now.ToString()), TxtTotal.Text, RetornarTipo(),Retornar_Tipo_Pago(),TxtCodCliente.Text,aCodUsuario);
             Raioz.ShowDialog();
+            
+
         }
 
         private void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             FrmCliente c = new FrmCliente();
             c.ShowDialog();
+        }
+
+        private void BtnGuardar_Click(object sender, EventArgs e)
+        {
+
         }
 
         /*private void BtnImprimir_Click(object sender, EventArgs e)

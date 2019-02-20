@@ -12,6 +12,7 @@ namespace LibFormularios
     {
         CCliente aCliente = new CCliente();
         CDetalleVentaCredito aDetalleCredito = new CDetalleVentaCredito();
+        string [] aDocVentaLista;
         public FrmPagoLetras()
         {
             InitializeComponent();
@@ -210,13 +211,23 @@ namespace LibFormularios
             GenerarNroDoc();
             FechaActual();
         }
-        public void IniciarDocPagoLetras(string DocVenta,string Monto,string Fecha,string Total)
+        private string [] CargarDatosDocVenta(string DocVenta, string Fecha, string Tipo,string Tipo_Pago, string Cliente, string Usuario)
         {
+            
+            string[] V = { DocVenta, Fecha, Tipo,Tipo_Pago ,Cliente, Usuario };
+            return V;
+
+        }
+        public void IniciarDocPagoLetras(string DocVenta,string Monto,string Fecha,string Total,string Tipo,string Tipo_Pago,string Cliente,string Usuario)
+        {
+            aDocVentaLista=CargarDatosDocVenta(DocVenta, Fecha, Tipo,Tipo_Pago, Cliente, Usuario);
+            MessageBox.Show(DocVenta +" "+ Fecha +" "+ Tipo +" "+ Cliente +" "+ Usuario);
             GenerarNroDoc();
             TxtDocVenta.Text = DocVenta;
             TxtMonto.Text = Monto;
             TxtMontoTotal.Text = Total;
             TxtFecha.Text = Fecha;
+
         }
 
         public void LimpiarTodo()
@@ -254,13 +265,5 @@ namespace LibFormularios
         {
             TxtFecha.Text = string.Format(DateTime.Now.ToString());
         }
-
-        private void BtnGuardar_Click(object sender, EventArgs e)
-        {
-            CDocVenta DV = new CDocVenta();
-            DV.Insertar();
-            this.Close();
-        }
-
     }
 }

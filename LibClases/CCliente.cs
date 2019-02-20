@@ -24,6 +24,14 @@ namespace LibClases
         {
             return 1;///Falta mejores 
         }
+        public bool Existe_DNI(string pDNI)
+        {
+            CConexion Conexion = new CConexion();
+            string CadenaConsulta = "spu_BuscarDNI '" + pDNI + "'";
+            Conexion.EjecutarSelect(CadenaConsulta);
+            //si existen registros en la tabla 0 del dataset,lacalve primaria existe
+            return (Conexion.Datos.Tables[0].Rows.Count > 0);
+        }
 
     }
 }

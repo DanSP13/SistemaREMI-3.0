@@ -279,8 +279,8 @@ namespace LibFormularios
         private void BtnGuardar_Click_1(object sender, EventArgs e)
         {
             CDetalleVentaCredito DVC = new CDetalleVentaCredito();
-            string [] InsertarDEt
-            DVC.Insertar()
+            string[] InsertarDEt;
+            DVC.Insertar();
         }
     }
 }

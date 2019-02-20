@@ -33,14 +33,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnIniciar_Secion = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pLogo = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtContraseña
@@ -56,6 +56,7 @@
             // 
             this.txtUsuario.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsuario.Location = new System.Drawing.Point(335, 86);
+            this.txtUsuario.MaxLength = 5;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(192, 31);
             this.txtUsuario.TabIndex = 14;
@@ -90,6 +91,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(592, 54);
             this.panel1.TabIndex = 18;
+            // 
+            // pLogo
+            // 
+            this.pLogo.Image = global::AppSistemaVentas.Properties.Resources.onlinelogomaker_112718_2148_7054;
+            this.pLogo.Location = new System.Drawing.Point(12, 3);
+            this.pLogo.Name = "pLogo";
+            this.pLogo.Size = new System.Drawing.Size(167, 50);
+            this.pLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pLogo.TabIndex = 1;
+            this.pLogo.TabStop = false;
             // 
             // label1
             // 
@@ -143,16 +154,6 @@
             this.pictureBox1.TabIndex = 36;
             this.pictureBox1.TabStop = false;
             // 
-            // pLogo
-            // 
-            this.pLogo.Image = global::AppSistemaVentas.Properties.Resources.onlinelogomaker_112718_2148_7054;
-            this.pLogo.Location = new System.Drawing.Point(12, 3);
-            this.pLogo.Name = "pLogo";
-            this.pLogo.Size = new System.Drawing.Size(167, 50);
-            this.pLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pLogo.TabIndex = 1;
-            this.pLogo.TabStop = false;
-            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,8 +171,8 @@
             this.Text = "REMI 2.0";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

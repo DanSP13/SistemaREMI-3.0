@@ -385,7 +385,7 @@ begin
 end
 go
 -------------
-exec spu_BuscarDNI '45784129'
+exec spu_BuscarDNI '111111'
 
 
 /*********************************************************************************************************************/
@@ -627,7 +627,7 @@ begin
 							insert into TDocVenta values (@NroDocVenta,@Fecha,@Tipo,@TipoPago,@CodCliente,@CodUsuario)
 							select CodError=0,Mensaje='Registro de Documento Venta insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
 					end
 					else select CodError=1,Mensaje='El campo de Codigo del Cliente no debe estar vacio'
 				end
@@ -673,10 +673,28 @@ begin
 		end
 		ELSE select CodError=1,Mensaje='El campo de codproducto no debe estar vacio'
 	end
-	ELSE select  CodError=1,Mensaje='El NroDocVenta no puede estar vacio o ya existe este codigo'
+	ELSE select  CodError=1,Mensaje='El NroDocVenta no puede estar vacio o no existe este codigo'
 END
 go
-
+----------------------------------------------------------------------------------------
+-------------------TDetalleVenta Listar por Codigo ---------------------------------------
+-----------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where name ='spuTDetalleVenta_ListaPorCodigo')
+	drop procedure spuTDetalleVenta_ListaPorCodigo
+go
+CREATE PROCEDURE spuTDetalleVenta_ListaPorCodigo
+	@NroDocVenta varchar(10)
+as
+begin
+-- validar codigo del cliente
+	IF (@NroDocVenta!='' and exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	begin
+		select A.CodProducto,A.Cantidad,B.Producto,B.Marca,B.Modelo,A.Serie,A.PrecioUnitario,(cast(Cantidad as int )*cast(A.PrecioUnitario as float))as SubTotal
+		from TDetalleVenta A inner join TProducto B on A.CodProducto=B.CodProducto 
+		where NroDocVenta=@NroDocVenta
+	end
+END
+go
 /*********************************************************************************************************************/
 /**************************************		DOCVENTACREDITO    ******************************************************/
 /*********************************************************************************************************************/
@@ -695,7 +713,7 @@ CREATE PROCEDURE spu_TDocVentaCredito_Insertar
 as
 begin
 -- validar codigo del cliente
-	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
 	begin
 		-- validar NroDocVenta
 		IF (@NroDocVenta!='')
@@ -710,7 +728,7 @@ begin
 							insert into TDocVentaCredito values(@NroDocVentaCredito,@NroDocVenta,@NroCuotas,@FechaPago,@Observaciones,@Estado)
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
 				end
 				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end
@@ -736,7 +754,7 @@ CREATE PROCEDURE spu_TDocVentaCredito_Actualizar
 as
 begin
 -- validar codigo del cliente
-	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVenta where NroDocVenta=@NroDocVenta))
+	IF (@NroDocVentaCredito!='' and not exists (select * from TDocVentaCredito where NroDocVentaCredito=@NroDocVentaCredito))
 	begin
 		-- validar NroDocVenta
 		IF (@NroDocVenta!='')
@@ -757,7 +775,7 @@ begin
 							where NroDocVentaCredito=@NroDocVentaCredito
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO actualizado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
 				end
 				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end
@@ -776,9 +794,9 @@ go
 create procedure spu_UltimoNroDocVentaCredito
 as 
 begin
-	select top 1 (substring(NroDocVenta,0,7)+convert(varchar(10),(convert(int,substring(NroDocVenta,5,len(NroDocVenta)))+1))) as Nro 
-	from TDocVenta
-	order by NroDocVenta desc
+	select top 1 (substring(NroDocVentaCredito,0,7)+convert(varchar(10),(convert(int,substring(NroDocVentaCredito,5,len(NroDocVentaCredito)))+1))) as Nro 
+	from TDocVentaCredito
+	order by NroDocVentaCredito desc
 end
 go
 
@@ -882,10 +900,10 @@ end
 go
 
 --------------------------------	Listar DocventacreditoDetalle	------------------------------------
-if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Actualizar')
-	drop procedure spu_TDetalleVentaCredito_Actualizar
+if exists (select * from dbo.sysobjects where name ='spu_TDetalleVentaCredito_Listar')
+	drop procedure spu_TDetalleVentaCredito_Listar
 go
-CREATE PROCEDURE spu_TDetalleVentaCredito_Actualizar
+CREATE PROCEDURE spu_TDetalleVentaCredito_Listar
 	@NroDocVentaCredito varchar(10)
 as
 begin
@@ -1058,6 +1076,21 @@ insert into TArqueoCaja values ('AC-000001','03/03/2017',2490,2490,'U0001')
 select * from TSerieProducto
 select * from TDocVenta
 select * from TDetalleVenta
+-----------------SPUs de los Resportes ----------------------
+--------------------------------------------------------------
+-----SPU para saber que productos estan sin stock-------------
+if exists (select * from dbo.sysobjects where name='spuProductosSinStock')
+	drop procedure spuProductosSinStock
+go
+create procedure spuProductosSinStock
+as 
+begin
+	select *
+	from TProducto
+	where Stock=0
+end
+go
+--------SPU para saber los Productos
 
 -----------------Usuario ---------------------------
 ------Los tipo pueden ser Vendedor,Adminitrador y Gerente ----------
@@ -1070,12 +1103,12 @@ insert into TUsuario values('U0004','SSDFS479','56574893','MARIO GOMEZ','38','92
 
 ----------------Producto --------------------------------
 insert into TProducto values('P0001','FREIDORA','Freidora AF1400','IMACO','AF1400',4,599)
-insert into TProducto values('P0002','OLLA ARROCERA','Olla cocción lenta 6,5L','iMACO','SLC065',6,200)
-insert into TProducto values('P0003','PARRILLA','Grill Panini','IMACO','IG2923',3,500)
-insert into TProducto values('P0004','LAVADORA','Lavadora de carga superior 22 kg','LG','TS2200DPSB',5,1000)
+insert into TProducto values('P0002','OLLA ARROCERA','Olla cocción lenta 6,5L','iMACO','SLC065',5,200)
+insert into TProducto values('P0003','PARRILLA','Grill Panini','IMACO','IG2923',2,500)
+insert into TProducto values('P0004','LAVADORA','Lavadora de carga superior 22 kg','LG','TS2200DPSB',1,1000)
 insert into TProducto values('P0005','Cupcake Maker','Cupcake Maker','Blanik','BCCM012',9,100)
 --insert into TProducto values('P0006','LAVADORA','Lavadora de carga superior 7 kg','LG','TS2600DPSB',5,600)
-insert into TProducto values('P0011','Sarten','Sartén eléctrica','Imaco','PES280',12,90)
+insert into TProducto values('P0011','Sarten','Sartén eléctrica','Imaco','PES280',1,90)
 insert into TProducto values('P0007','Cocedor de Huevos','Cocedor de Huevos','Thomas','TH 80',7,80)
 insert into TProducto values('P0008','Máquina de Pop Corn','Máquina de Pop Corn Coca-Cola','Nostalgia','RHP310COKE',14,60)
 insert into TProducto values('P0009','Yogurt Maker','Yogurt Maker Pro','Blanik','BYMP048',8,100)
@@ -1090,22 +1123,18 @@ insert into TProducto values('P0016','TV','TV HD','LG','LGTY56139',3,4560)
 -------Tambien puede haber haber productos sin serie por lo cual no habria registro---
 -----de dicho producto en el sgte tabla y ademas cada producto puede tener varias series---------
 insert into TSerieProducto values('P0001','231784221562')
-insert into TSerieProducto values('P0002','679051264646')
-insert into TSerieProducto values('P0003','254785212345')
-insert into TSerieProducto values('P0004','452343378923')
-insert into TSerieProducto values('P0005','781745587863')
-insert into TSerieProducto values('P0006','671785221562')
-insert into TSerieProducto values('P0006','756551264646')
-insert into TSerieProducto values('P0007','451785212345')
-insert into TSerieProducto values('P0008','752345678923')
-insert into TSerieProducto values('P0009','341745587863')
-insert into TSerieProducto values('P0010','746554677789')
+insert into TSerieProducto values('P0001','679051264646')
+insert into TSerieProducto values('P0001','254785212345')
+insert into TSerieProducto values('P0001','452343378923')
+insert into TSerieProducto values('P0002','781745587863')
+insert into TSerieProducto values('P0002','671785221562')
+insert into TSerieProducto values('P0002','756551264646')
+insert into TSerieProducto values('P0002','451785212345')
+insert into TSerieProducto values('P0002','752345678923')
+insert into TSerieProducto values('P0003','341745587863')
+insert into TSerieProducto values('P0003','746554677789')
 insert into TSerieProducto values('P0011','442455266647')
-insert into TSerieProducto values('P0012','766555678930')
---insert into TSerieProducto values('P0013','451745587863')
-insert into TSerieProducto values('P0014','236554677789')
-insert into TSerieProducto values('P0015','892455266647')
-insert into TSerieProducto values('P0016','906555678930')
+insert into TSerieProducto values('P0004','766555678930')
 
 --------------Clientes--------------------------------------
 insert into TCliente values('C00001','45782311','CHIMUELO PEREZ','JR YUPANQUI','ejemplo@gmail.com','988574521')
@@ -1133,8 +1162,8 @@ insert into TDocVenta values('BV-000006','24/08/2018','BOLETA','CONTADO','C00005
 ---insert into TDocVenta values('BV-000007','12/09/2018','BOLETA','CONTADO','C00006','U0001')
 insert into TDocVenta values('BV-000008','01/10/2018','BOLETA','CONTADO','C00008','U0002')
 insert into TDocVenta values('BV-000009','12/11/2018','BOLETA','CREDITO','C00010','U0001')
-insert into TDocVenta values('BV-000010','23/11/2018','BOLETA','CONTADO','C00011','U0002')
-insert into TDocVenta values('BV-000011','05/12/2018','BOLETA','CONTADO','C00012','U0002')
+insert into TDocVenta values('FV-000010','23/11/2018','FACTURA','CONTADO','C00011','U0002')
+insert into TDocVenta values('FV-000011','05/12/2018','FACTURA','CONTADO','C00012','U0002')
 insert into TDocVenta values('BV-000012','31/12/2018','BOLETA','CREDITO','C00005','U0001')
 insert into TDocVenta values('BV-000013','20/01/2018','BOLETA','CONTADO','C00006','U0001')
 insert into TDocVenta values('BV-000014','24/01/2018','BOLETA','CREDITO','C00006','U0002')
@@ -1154,8 +1183,8 @@ insert into TDetalleVenta values('BV-000006','P0014','236554677789',3,600)
 insert into TDetalleVenta values('BV-000007','P0005','781745587863',3,2000)
 insert into TDetalleVenta values('BV-000008','P0011','442455266647',3,200)
 insert into TDetalleVenta values('BV-000009','P0014','236554677789',1,100)
-insert into TDetalleVenta values('BV-000010','P0007','451785212345',2,100)
-insert into TDetalleVenta values('BV-000011','P0003','254785212345',1,4000)
+insert into TDetalleVenta values('FV-000010','P0007','451785212345',2,100)
+insert into TDetalleVenta values('FV-000011','P0003','254785212345',1,4000)
 insert into TDetalleVenta values('BV-000012','P0005','781745587863',4,300)
 insert into TDetalleVenta values('BV-000013','P0014','236554677789',3,800)
 insert into TDetalleVenta values('BV-000014','P0007','451785212345',1,700)
@@ -1174,9 +1203,10 @@ insert into TDocVentaCredito values('BC-00004','BV-000004','3','05/02/2019','','
 insert into TDocVentaCredito values('BC-00003','BV-000003','1','04/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00009','BV-000009','2','11/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00012','BV-000012','3','17/01/2019','','ACTIVO')
-insert into TDocVentaCredito values('BC-00011','BV-000011','1','19/01/2019','','ACTIVO')
+insert into TDocVentaCredito values('BC-00011','FV-000011','1','19/01/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00014','BV-000014','2','21/02/2019','','ACTIVO')
 insert into TDocVentaCredito values('BC-00015','BV-000015','1','23/02/2019','','ACTIVO')
+exec spu_TDocVentaCredito_Insertar 'BC-00016','BV-000015','1','23/02/2019','','ACTIVO'
 
 ------------TDetalleVentaCredito --------------------------------------
 ---El Numero de datos a insertar debe coincidir con el nro de cuotas de la tabla anterior---------
@@ -1200,3 +1230,4 @@ insert into TDetalleVentaCredito values('BC-00015','1','23/02/2019','U0001','100
 insert into TArqueoCaja values('AC-00001','12/01/2018',100,3547,'U0001')
 insert into TArqueoCaja values('AC-00002','12/01/2018',100,3547,'U0001')
 
+select * from TCliente

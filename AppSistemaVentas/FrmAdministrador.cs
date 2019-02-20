@@ -34,7 +34,9 @@ namespace AppSistemaVentas
 
         private void btnFactura_Click(object sender, EventArgs e)
         {
-            Abrir_Formulario_En_Panel(new FrmDocVenta());
+            FrmDocVenta A = new FrmDocVenta();
+            A.aCodUsuario = lblCodigo.Text;
+            Abrir_Formulario_En_Panel(A);
         }
 
         private void btnProductos_Click(object sender, EventArgs e)

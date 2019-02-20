@@ -16,6 +16,7 @@ namespace LibFormularios
         {
             InitializeComponent();
             IniciarEntidad(new CProducto());
+            RdbSiSerie.Checked = true;
         }
         //======REDEFINICION DE LOS METODOS VIRTUAL =================
         //-----Establecer los valores que iran a la tabla
@@ -183,6 +184,26 @@ namespace LibFormularios
         {
             if (CboSeries.Text != "") TxtStock.Enabled = false;
             else TxtStock.Enabled = true;
+        }
+
+        private void RdbNoSerie_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RdbNoSerie.Checked == true)
+            {
+                CboSeries.Enabled = false;
+                BtnAgregarSerie.Enabled = false;
+                TxtStock.Enabled = true;
+            }
+        }
+
+        private void RdbSiSerie_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RdbSiSerie.Enabled == true)
+            {
+                CboSeries.Enabled = true;
+                BtnAgregarSerie.Enabled = true;
+                TxtStock.Enabled = false;
+            }
         }
     }
 }

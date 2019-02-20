@@ -73,5 +73,17 @@ namespace LibFormularios
         {
             ProcesarClave();
         }
+        //Metodo que inhabilita las opciones de eliminar y modificar un cliente
+        //a un Vendedor
+        public void HabilitarVendedor()
+        {
+            BtnEliminar.Visible = false;
+            BtnNuevo.Visible = false;
+        }
+        //Propiedad que retorna el codcliente
+        public string CodCliente
+        {
+            get { return TxtCodCliente.Text; }
+        }
     }
 }

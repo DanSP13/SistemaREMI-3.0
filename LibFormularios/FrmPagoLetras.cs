@@ -177,7 +177,7 @@ namespace LibFormularios
                     string[] Atributos = AsignarValoresAtributos();
                     //----Verificar si existe clave primaria
                     aEntidad.Insertar(Atributos);
-                    if (aDetalleCredito.ValorAtributo("CodError") == "0" && aEntidad.ValorAtributo("CodError") == "0")
+                    if (aEntidad.ValorAtributo("CodError") == "0" && aEntidad.ValorAtributo("CodError") == "0")
                     {
                         //---Inicializar el formulario
                         MessageBox.Show(aEntidad.ValorAtributo("Mensaje"), "CONFIRMACION");

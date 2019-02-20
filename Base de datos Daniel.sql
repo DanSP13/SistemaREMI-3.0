@@ -1047,6 +1047,7 @@ begin
 end
 go
 --------SPU para saber los Productos han sido los mas vendidos
+if exists (select * from dbo.sysobjects where name='spuProductosMasVendidos')
 	drop procedure spuProductosMasVendidos
 go
 create procedure spuProductosMasVendidos

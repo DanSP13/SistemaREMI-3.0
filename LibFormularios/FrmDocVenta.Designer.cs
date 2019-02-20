@@ -138,7 +138,7 @@
             // 
             // TxtFecha
             // 
-            this.TxtFecha.Text = "19/02/2019 10:07:07";
+            this.TxtFecha.Text = "13/02/2019 16:12:20";
             // 
             // PanBotones
             // 
@@ -154,7 +154,6 @@
             // BtnGuardar
             // 
             this.BtnGuardar.Location = new System.Drawing.Point(7, 29);
-            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // pictureBox1
             // 

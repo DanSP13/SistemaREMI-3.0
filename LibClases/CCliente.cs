@@ -24,6 +24,16 @@ namespace LibClases
         {
             return 1;///Falta mejores 
         }
+        public string BuscarDNI(string text)
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spu_BuscarDNI '" + text + "'";
+            Con.EjecutarSelect(Consulta);
+            if (Con.Datos.Tables[0].Rows.Count>0)
+                return Con.Datos.Tables[0].Rows[0]["CodCliente"].ToString();
+            else return "";
+        }
 
     }
 }

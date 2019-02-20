@@ -1046,8 +1046,78 @@ begin
 	where Stock=0
 end
 go
---------SPU para saber los Productos
+--------SPU para saber los Productos han sido los mas vendidos
+	drop procedure spuProductosMasVendidos
+go
+create procedure spuProductosMasVendidos
+as 
+begin
+	select  COUNT(A.CodProducto) as Vendidos, B.Descripcion,B.Producto,B.Marca,B.Modelo
+	from TDetalleVenta A inner join TProducto B on A.CodProducto=B.CodProducto
+	group by B.Descripcion,B.Producto,B.Marca,Modelo
+	order by Vendidos desc
+	
+end
+go
 
+exec spuProductosMasVendidos
+--------SPU para saber los Productos han sido los menos Vendidos
+if exists (select * from dbo.sysobjects where name='spuProductosMenosVendidos')
+	drop procedure spuProductosMenosVendidos
+go
+create procedure spuProductosMenosVendidos
+as 
+begin
+	select  COUNT(A.CodProducto) as Vendidos, B.Descripcion,B.Producto,B.Marca,B.Modelo
+	from TDetalleVenta A inner join TProducto B on A.CodProducto=B.CodProducto
+	group by B.Descripcion,B.Producto,B.Marca,Modelo
+	order by Vendidos 
+	
+end
+go
+
+exec spuProductosMenosVendidos
+
+--------SPU para saber los dias con mas ventas
+if exists (select * from dbo.sysobjects where name='spuDiasMasVendidos')
+	drop procedure spuDiasMasVendidos
+go
+create procedure spuDiasMasVendidos
+as 
+begin
+	select sum(Cantidad*PrecioUnitario) as Ventas,D.NroDocVenta,D.Fecha
+	into #Aux
+	from TDocVenta D inner join TDetalleVenta B on D.NroDocVenta=B.NroDocVenta
+	group by D.NroDocVenta,D.Fecha
+
+	select Fecha,sum(Ventas) as venta
+	from #Aux
+	group by Fecha 
+	order by venta desc
+	
+end
+go
+exec spuDiasMasVendidos
+--------SPU para saber los clientes que gastan mas
+if exists (select * from dbo.sysobjects where name='spuClientesEstrella')
+	drop procedure spuClientesEstrella
+go
+create procedure spuClientesEstrella
+as 
+begin
+	select sum(Cantidad*PrecioUnitario) as Ventas,D.NroDocVenta,D.CodCliente
+	into #Aux
+	from TDocVenta D inner join TDetalleVenta B on D.NroDocVenta=B.NroDocVenta
+	group by D.NroDocVenta,D.Fecha,D.CodCliente
+
+	select A.CodCliente,b.Nombres,b.Email,b.Telefono,sum(Ventas) as ventaCliente
+	from #Aux A inner join TCliente B on A.CodCliente=B.CodCliente
+	group by A.CodCliente,b.Nombres,b.Email,b.Telefono
+	order by ventaCliente desc
+	
+end
+go
+exec spuClientesEstrella
 -----------------Usuario ---------------------------
 ------Los tipo pueden ser Vendedor,Adminitrador y Gerente ----------
 ------Pero ssolo puede haber un administrador y Genrente-------

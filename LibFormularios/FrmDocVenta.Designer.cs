@@ -153,7 +153,7 @@
             // TxtFecha
             // 
             this.TxtFecha.Location = new System.Drawing.Point(369, 51);
-            this.TxtFecha.Text = "20/02/2019 00:10:37";
+            this.TxtFecha.Text = "20/02/2019 10:29:53";
             // 
             // PanBotones
             // 

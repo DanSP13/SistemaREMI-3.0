@@ -110,6 +110,10 @@
             // 
             this.PanBotones.Location = new System.Drawing.Point(0, 294);
             // 
+            // BtnGuardar
+            // 
+            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click_1);
+            // 
             // TxtEstado
             // 
             this.TxtEstado.Location = new System.Drawing.Point(440, 170);
@@ -162,9 +166,12 @@
             // TxtNroCuotas
             // 
             this.TxtNroCuotas.Location = new System.Drawing.Point(124, 104);
+            this.TxtNroCuotas.MaxLength = 1;
             this.TxtNroCuotas.Name = "TxtNroCuotas";
             this.TxtNroCuotas.Size = new System.Drawing.Size(200, 20);
             this.TxtNroCuotas.TabIndex = 41;
+            this.TxtNroCuotas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNroCuotas_KeyPress);
+            this.TxtNroCuotas.Leave += new System.EventHandler(this.TxtNroCuotas_Leave);
             // 
             // label4
             // 

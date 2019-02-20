@@ -262,5 +262,25 @@ namespace LibFormularios
             this.Close();
         }
 
+        private void TxtNroCuotas_Leave(object sender, EventArgs e)
+        {
+            double MontoTotal = double.Parse(TxtMontoTotal.Text);
+
+            TxtMontoTotal.Text = (MontoTotal + int.Parse(TxtNroCuotas.Text)*MontoTotal*0.1).ToString();
+        }
+
+        private void TxtNroCuotas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) e.Handled = false;
+            else if (Char.IsControl(e.KeyChar)) e.Handled = false;
+            else e.Handled = true;
+        }
+
+        private void BtnGuardar_Click_1(object sender, EventArgs e)
+        {
+            CDetalleVentaCredito DVC = new CDetalleVentaCredito();
+            string [] InsertarDEt
+            DVC.Insertar()
+        }
     }
 }

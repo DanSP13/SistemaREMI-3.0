@@ -523,11 +523,11 @@ namespace LibFormularios
 
         private void BtnPagoLetras_Click(object sender, EventArgs e)
         {
-            BtnGuardar.PerformClick();
             FrmPagoLetras Raioz = new FrmPagoLetras();
-            float mitad = 0;
+            double mitad = double.Parse(TxtTotal.Text)/2;
             Raioz.IniciarDocPagoLetras(TxtNroDoc.Text, mitad.ToString()
                 , string.Format(DateTime.Now.ToString()), TxtTotal.Text);
+            BtnGuardar.PerformClick();
             Raioz.ShowDialog();
         }
 
@@ -570,6 +570,8 @@ namespace LibFormularios
             TxtCodCliente.Text= Cliente.CodCliente;
             BtnAgregarNuevoCliente.Enabled = false;
         }
+
+        
 
         /*private void BtnImprimir_Click(object sender, EventArgs e)
         {

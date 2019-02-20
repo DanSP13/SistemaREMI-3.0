@@ -75,6 +75,7 @@
             // TxtCodUsuario
             // 
             this.TxtCodUsuario.Location = new System.Drawing.Point(133, 33);
+            this.TxtCodUsuario.MaxLength = 10;
             this.TxtCodUsuario.Name = "TxtCodUsuario";
             this.TxtCodUsuario.Size = new System.Drawing.Size(194, 20);
             this.TxtCodUsuario.TabIndex = 34;
@@ -103,6 +104,7 @@
             // 
             this.TxtNroArqueo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtNroArqueo.Location = new System.Drawing.Point(385, 11);
+            this.TxtNroArqueo.MaxLength = 10;
             this.TxtNroArqueo.Name = "TxtNroArqueo";
             this.TxtNroArqueo.Size = new System.Drawing.Size(203, 38);
             this.TxtNroArqueo.TabIndex = 31;
@@ -132,6 +134,7 @@
             this.TxtFecha.Enabled = false;
             this.TxtFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtFecha.Location = new System.Drawing.Point(385, 56);
+            this.TxtFecha.MaxLength = 10;
             this.TxtFecha.Name = "TxtFecha";
             this.TxtFecha.Size = new System.Drawing.Size(203, 30);
             this.TxtFecha.TabIndex = 29;

@@ -150,6 +150,7 @@
             this.TxtCodProducto.Size = new System.Drawing.Size(230, 20);
             this.TxtCodProducto.TabIndex = 70;
             this.TxtCodProducto.Text = "P";
+            this.TxtCodProducto.TextChanged += new System.EventHandler(this.TxtCodProducto_TextChanged);
             this.TxtCodProducto.Leave += new System.EventHandler(this.TxtCodProducto_Leave);
             // 
             // label8

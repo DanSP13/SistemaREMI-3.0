@@ -150,6 +150,10 @@ namespace LibFormularios
                 TxtEmail.Text = aCliente.ValorAtributo("Email");
                 TxtTelefono.Text = aCliente.ValorAtributo("Telefono");
             }
+            else
+            {
+                MessageBox.Show("Cliente no registrado");
+            }
         }
         //------------------------------------------------------------------------
         //-----------Mostrar Datos del Producto-----------------------------------
@@ -172,8 +176,20 @@ namespace LibFormularios
                 CargarSeries(TxtCodProducto.Text);
                 TxtStock.Text = aProducto.ValorAtributo("Stock");
                 TxtPrecio.Text = aProducto.ValorAtributo("PrecioUnitario");
-                if (CboSeries.Items.Count > 0) TxtCantidad.Enabled = false;
-                else TxtCantidad.Enabled = true;
+                if (CboSeries.Items.Count > 0)
+                {
+                    TxtCantidad.Enabled = false;
+                    CboSeries.Enabled = true;
+                }
+                else
+                {
+                    TxtCantidad.Enabled = true;
+                    CboSeries.Enabled = false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("El producto no existe");
             }
         }
         //-------------------------------------------------------------------------
@@ -183,6 +199,10 @@ namespace LibFormularios
             if (aDetalle.ExisteClavePrimaria(NroDocVenta))
             {
                 DgvDetalleVentas.DataSource = aDetalle.ListarPorCodigo(NroDocVenta);
+                for(int i = 0; i < DgvDetalleVentas.Columns.Count; i++)
+                {
+                    DgvDetalleVentas.Columns[i].Width = 78;
+                }
             }
         }
         //-------------------------------------------------------------------
@@ -262,27 +282,44 @@ namespace LibFormularios
         }
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
-            if (TxtCodProducto.Text != "P" && ValidarCantidad() && TxtStock.Text != "0" && CboSeries.SelectedIndex != -1)
+            if (TxtCodProducto.Text != "P" && ValidarCantidad() && TxtStock.Text != "0")
             {
-                if (BuscarCodigoGrid(TxtCodProducto.Text) == -1 || CboSeries.Items.Count > 0)
+                if (CboSeries.Items.Count > 0)
                 {
-                    double AuxSubtotal = int.Parse(TxtCantidad.Text) * double.Parse(TxtPrecio.Text);
-                    DgvDetalleVentas.Rows.Add(TxtCodProducto.Text, TxtCantidad.Text, TxtProducto.Text, TxtMarca.Text, TxtModelo.Text, CboSeries.Text, TxtPrecio.Text, AuxSubtotal);
-                    CalcularTotales();
-                    EliminarSerie(TxtCodProducto.Text, CboSeries.Text);
-                    ActualizarStock(TxtCodProducto.Text, int.Parse(TxtCantidad.Text), false);
+                    if (CboSeries.SelectedIndex != -1)
+                    {
+                        double AuxSubtotal = int.Parse(TxtCantidad.Text) * double.Parse(TxtPrecio.Text);
+                        DgvDetalleVentas.Rows.Add(TxtCodProducto.Text, TxtCantidad.Text, TxtProducto.Text, TxtMarca.Text, TxtModelo.Text, CboSeries.Text, TxtPrecio.Text, AuxSubtotal);
+                        CalcularTotales();
+                        EliminarSerie(TxtCodProducto.Text, CboSeries.Text);
+                        ActualizarStock(TxtCodProducto.Text, int.Parse(TxtCantidad.Text), false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Debe seleccionar una serie");
+                    }
                 }
                 else
                 {
                     int Fila = BuscarCodigoGrid(TxtCodProducto.Text);
-                    int NuevaCantidad = int.Parse(DgvDetalleVentas.Rows[Fila].Cells[1].Value.ToString()) + int.Parse(TxtCantidad.Text);
-                    DgvDetalleVentas.Rows[Fila].Cells[1].Value = NuevaCantidad.ToString();
-                    double AuxSubtotal = int.Parse(DgvDetalleVentas.Rows[Fila].Cells[7].Value.ToString()) * double.Parse(TxtPrecio.Text);
-                    DgvDetalleVentas.Rows[Fila].Cells[7].Value = AuxSubtotal.ToString();
-                    (DgvDetalleVentas.Rows[Fila].Cells[5].Value as ComboBox).Items.Add(CboSeries.Text);
-                    CalcularTotales();
-                    EliminarSerie(TxtCodProducto.Text, CboSeries.Text);
-                    ActualizarStock(TxtCodProducto.Text, int.Parse(TxtCantidad.Text), false);
+                    if (Fila == -1)
+                    {
+                        double AuxSubtotal = int.Parse(TxtCantidad.Text) * double.Parse(TxtPrecio.Text);
+                        DgvDetalleVentas.Rows.Add(TxtCodProducto.Text, TxtCantidad.Text, TxtProducto.Text, TxtMarca.Text, TxtModelo.Text, CboSeries.Text, TxtPrecio.Text, AuxSubtotal);
+                        CalcularTotales();
+                        ActualizarStock(TxtCodProducto.Text, int.Parse(TxtCantidad.Text), false);
+                    }
+                    else
+                    {
+                        int NuevaCantidad = int.Parse(DgvDetalleVentas.Rows[Fila].Cells[1].Value.ToString()) + int.Parse(TxtCantidad.Text);
+                        DgvDetalleVentas.Rows[Fila].Cells[1].Value = NuevaCantidad.ToString();
+                        double AuxSubtotal = int.Parse(DgvDetalleVentas.Rows[Fila].Cells[7].Value.ToString()) * double.Parse(TxtPrecio.Text);
+                        DgvDetalleVentas.Rows[Fila].Cells[7].Value = AuxSubtotal.ToString();
+                        DgvDetalleVentas.Rows[Fila].Cells[5].Value = " ";
+                        CalcularTotales();
+                        ActualizarStock(TxtCodProducto.Text, int.Parse(TxtCantidad.Text), false);
+                    }
+                    
                 }
                 TxtCodProducto.Enabled = true;
                 LimpiarTxtsProducto();
@@ -409,6 +446,7 @@ namespace LibFormularios
             GenerarNroDoc("BOLETA");
             FormatearGridProductos();
             FechaActual();
+            BtnNuevo.Enabled = false;
         }
         public void LimpiarTodo()
         {
@@ -418,6 +456,8 @@ namespace LibFormularios
             TxtDNI.Text = "";
             TxtDireccion.Text = "";
             TxtEmail.Text = "";
+            TxtNombre.Text = "";
+            TxtTelefono.Text = "";
             TxtCantidad.Text = "";
             TxtSubTotal.Text = "";
             TxtTotalLetra.Text = "";
@@ -453,6 +493,7 @@ namespace LibFormularios
                 DgvDetalleVentas.Columns.Clear();
                 BloqueoFormulario(false);
                 ProcesarClave();
+                BtnNuevo.Enabled = true;
             }
             else
             {
@@ -462,11 +503,17 @@ namespace LibFormularios
 
         private void RdbBoleta_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdbBoleta.Checked == true) GenerarNroDoc("BOLETA");
+            if (RdbBoleta.Checked == true)
+            {
+                GenerarNroDoc("BOLETA");
+            }
         }
         private void RdbFactura_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdbFactura.Checked) GenerarNroDoc("FACTURA");
+            if (RdbFactura.Checked)
+            {
+                GenerarNroDoc("FACTURA");
+            }
         }
 
         private void CboSeries_SelectedIndexChanged(object sender, EventArgs e)
@@ -487,6 +534,40 @@ namespace LibFormularios
         {
             FrmCliente c = new FrmCliente();
             c.ShowDialog();
+        }
+
+        private void BtnBuscarDoc_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnBuscarDNI_Click(object sender, EventArgs e)
+        {
+            if (TxtDNIBusqueda.Text == "")
+            {
+                MessageBox.Show("Cuadro de Busqueda Vacio");
+            }
+            else
+            {
+                if (aCliente.BuscarDNI(TxtDNIBusqueda.Text) != "")
+                {
+                    TxtCodCliente.Text = aCliente.BuscarDNI(TxtDNIBusqueda.Text);
+                }
+                else
+                {
+                    BtnAgregarNuevoCliente.Enabled = true;
+                    MessageBox.Show("El Cliente no existe si desea puede agregarlo");
+                }
+            }
+        }
+
+        private void BtnAgregarNuevoCliente_Click(object sender, EventArgs e)
+        {
+            FrmCliente Cliente = new FrmCliente();
+            Cliente.HabilitarVendedor();
+            Cliente.ShowDialog();
+            TxtCodCliente.Text= Cliente.CodCliente;
+            BtnAgregarNuevoCliente.Enabled = false;
         }
 
         /*private void BtnImprimir_Click(object sender, EventArgs e)

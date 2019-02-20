@@ -55,7 +55,6 @@
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Text = "REGISTRO DE CLIENTES";
             // 
             // PanDataView
@@ -89,6 +88,9 @@
             // PanBotones
             // 
             this.PanBotones.Location = new System.Drawing.Point(3, 278);
+            // 
+            // BtnGuardar
+            // 
             // 
             // DgvClientes
             // 

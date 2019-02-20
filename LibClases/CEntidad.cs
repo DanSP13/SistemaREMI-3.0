@@ -274,5 +274,29 @@ namespace LibClases
             aConexion.EjecutarSelect(Consulta);
             return (aConexion.Datos.Tables[0].Rows.Count > 0);
         }
+        public DataTable CargarArqueoCajaNroArqueo(string NroArqueo, string CodUsuario)
+        {
+            //-- Retorna una tabla con la lsita completam de libros
+            //string Consulta = "select * from " + aNombreTabla;
+            string Consulta = "exec spu_IrCargarDatosContadoArqueoCaja " + "'" + NroArqueo + "'," + "'" + CodUsuario +"'";
+            aConexion.EjecutarSelect(Consulta);
+            return aConexion.Datos.Tables[0];
+        }
+        public DataTable CargarArqueoCajaContadoNroArqueo(string Fecha, string CodUsuario)
+        {
+            //-- Retorna una tabla con la lsita completam de libros
+            //string Consulta = "select * from " + aNombreTabla;
+            string Consulta = "exec spu_RecuperarCargarDatosContadoArqueoCaja " + "'" + Fecha + "'," + "'" + CodUsuario + "'";
+            aConexion.EjecutarSelect(Consulta);
+            return aConexion.Datos.Tables[0];
+        }
+        public DataTable CargarArqueoCajaCreditoNroArqueo(string Fecha, string CodUsuario)
+        {
+            //-- Retorna una tabla con la lsita completam de libros
+            //string Consulta = "select * from " + aNombreTabla;
+            string Consulta = "exec spu_RecuperarCargarDatosCreditoArqueoCaja " + "'" + Fecha + "'," + "'" + CodUsuario + "'";
+            aConexion.EjecutarSelect(Consulta);
+            return aConexion.Datos.Tables[0];
+        }
     }
 }

@@ -48,7 +48,7 @@
             this.TxtTotal = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.TxtIGV = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.LblIGV = new System.Windows.Forms.Label();
             this.TxtSubTotal = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -160,7 +160,6 @@
             this.BtnBuscarDoc.TabIndex = 23;
             this.BtnBuscarDoc.Text = "Ir a Doc ";
             this.BtnBuscarDoc.UseVisualStyleBackColor = true;
-            this.BtnBuscarDoc.Click += new System.EventHandler(this.BtnBuscarDoc_Click);
             // 
             // TxtFecha
             // 
@@ -205,7 +204,7 @@
             this.PanBotones.Controls.Add(this.TxtTotal);
             this.PanBotones.Controls.Add(this.label18);
             this.PanBotones.Controls.Add(this.TxtIGV);
-            this.PanBotones.Controls.Add(this.label17);
+            this.PanBotones.Controls.Add(this.LblIGV);
             this.PanBotones.Controls.Add(this.TxtSubTotal);
             this.PanBotones.Controls.Add(this.label16);
             this.PanBotones.Controls.Add(this.label15);
@@ -253,14 +252,14 @@
             this.TxtIGV.Size = new System.Drawing.Size(94, 20);
             this.TxtIGV.TabIndex = 17;
             // 
-            // label17
+            // LblIGV
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(478, 32);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(31, 13);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "IGV :";
+            this.LblIGV.AutoSize = true;
+            this.LblIGV.Location = new System.Drawing.Point(478, 32);
+            this.LblIGV.Name = "LblIGV";
+            this.LblIGV.Size = new System.Drawing.Size(31, 13);
+            this.LblIGV.TabIndex = 16;
+            this.LblIGV.Text = "IGV :";
             // 
             // TxtSubTotal
             // 
@@ -352,7 +351,6 @@
         protected System.Windows.Forms.TextBox TxtTotal;
         private System.Windows.Forms.Label label18;
         protected System.Windows.Forms.TextBox TxtIGV;
-        private System.Windows.Forms.Label label17;
         protected System.Windows.Forms.TextBox TxtSubTotal;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
@@ -363,5 +361,6 @@
         protected System.Windows.Forms.RadioButton RdbFactura;
         protected System.Windows.Forms.RadioButton RdbBoleta;
         protected System.Windows.Forms.Timer Timer1;
+        protected System.Windows.Forms.Label LblIGV;
     }
 }

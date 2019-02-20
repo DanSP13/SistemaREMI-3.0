@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using LibClases;
 namespace AppSistemaVentas
 {
+
     public partial class FormLogin : Form
     {
         public FormLogin()
@@ -58,6 +59,17 @@ namespace AppSistemaVentas
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtUsuario_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (!textBox.Text.StartsWith("U")) {
+                textBox.Text = "U";
+                textBox.Select(textBox.Text.Length, 0);
+            }
+
+
         }
     }
 }

@@ -205,5 +205,15 @@ namespace LibFormularios
                 TxtStock.Enabled = false;
             }
         }
+
+        private void TxtCodProducto_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (!textBox.Text.StartsWith("P"))
+            {
+                textBox.Text = "P";
+                textBox.Select(textBox.Text.Length, 0);
+            }
+        }
     }
 }

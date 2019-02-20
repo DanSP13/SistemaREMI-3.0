@@ -142,10 +142,12 @@
             // txtCodigo_Usuario
             // 
             this.txtCodigo_Usuario.Location = new System.Drawing.Point(292, 10);
-            this.txtCodigo_Usuario.MaxLength = 10;
+            this.txtCodigo_Usuario.MaxLength = 5;
             this.txtCodigo_Usuario.Name = "txtCodigo_Usuario";
             this.txtCodigo_Usuario.Size = new System.Drawing.Size(215, 20);
             this.txtCodigo_Usuario.TabIndex = 25;
+            this.txtCodigo_Usuario.Text = "U";
+            this.txtCodigo_Usuario.TextChanged += new System.EventHandler(this.txtCodigo_Usuario_TextChanged);
             this.txtCodigo_Usuario.Leave += new System.EventHandler(this.txtCodigo_Usuario_Leave);
             // 
             // label10

@@ -85,5 +85,15 @@ namespace LibFormularios
         {
             ProcesarClave();
         }
+
+        private void txtCodigo_Usuario_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (!textBox.Text.StartsWith("U"))
+            {
+                textBox.Text = "U";
+                textBox.Select(textBox.Text.Length, 0);
+            }
+        }
     }
 }

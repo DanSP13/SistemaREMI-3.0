@@ -571,7 +571,22 @@ namespace LibFormularios
             BtnAgregarNuevoCliente.Enabled = false;
         }
 
-        
+        private void TxtFecha_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtCodProducto_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (!textBox.Text.StartsWith("P"))
+            {
+                textBox.Text = "P";
+                textBox.Select(textBox.Text.Length, 0);
+            }
+        }
+
+
 
         /*private void BtnImprimir_Click(object sender, EventArgs e)
         {

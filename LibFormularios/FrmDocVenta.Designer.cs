@@ -153,7 +153,8 @@
             // TxtFecha
             // 
             this.TxtFecha.Location = new System.Drawing.Point(369, 51);
-            this.TxtFecha.Text = "20/02/2019 10:29:53";
+            this.TxtFecha.Text = "20/02/2019 14:48:31";
+            this.TxtFecha.TextChanged += new System.EventHandler(this.TxtFecha_TextChanged);
             // 
             // PanBotones
             // 
@@ -313,6 +314,7 @@
             this.TxtCodProducto.Size = new System.Drawing.Size(213, 20);
             this.TxtCodProducto.TabIndex = 12;
             this.TxtCodProducto.Text = "P";
+            this.TxtCodProducto.TextChanged += new System.EventHandler(this.TxtCodProducto_TextChanged);
             this.TxtCodProducto.Leave += new System.EventHandler(this.TxtCodProducto_Leave);
             // 
             // label9

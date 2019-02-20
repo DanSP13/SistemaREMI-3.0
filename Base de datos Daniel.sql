@@ -627,7 +627,7 @@ begin
 							insert into TDocVenta values (@NroDocVenta,@Fecha,@Tipo,@TipoPago,@CodCliente,@CodUsuario)
 							select CodError=0,Mensaje='Registro de Documento Venta insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Codigo del Usuario no debe estar vacio'
 					end
 					else select CodError=1,Mensaje='El campo de Codigo del Cliente no debe estar vacio'
 				end
@@ -728,7 +728,7 @@ begin
 							insert into TDocVentaCredito values(@NroDocVentaCredito,@NroDocVenta,@NroCuotas,@FechaPago,@Observaciones,@Estado)
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO insertado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
 				end
 				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end
@@ -775,7 +775,7 @@ begin
 							where NroDocVentaCredito=@NroDocVentaCredito
 							select CodError=0,Mensaje='Registro de la VENTA DE CREDITO actualizado exitosamente'
 						end
-						select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
+						else select CodError=1,Mensaje='El campo de Estado no debe estar vacio'
 				end
 				else select CodError=1,Mensaje='El campo de @FechaPago no debe estar vacio'
 			end

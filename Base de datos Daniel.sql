@@ -1143,7 +1143,7 @@ begin
 end
 go
 exec spuDiasMasVendidos
---------SPU para saber los clientes que gastan mas dentro de la tienda
+--------SPU para saber los clientes que gastan mas dentro de la tienda xdxdxdx
 if exists (select * from dbo.sysobjects where name='spuClientesEstrella')
 	drop procedure spuClientesEstrella
 go

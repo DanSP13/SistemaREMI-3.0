@@ -523,6 +523,7 @@ namespace LibFormularios
 
         private void BtnPagoLetras_Click(object sender, EventArgs e)
         {
+            BtnGuardar.PerformClick();
             FrmPagoLetras Raioz = new FrmPagoLetras();
             float mitad = 0;
             Raioz.IniciarDocPagoLetras(TxtNroDoc.Text, mitad.ToString()

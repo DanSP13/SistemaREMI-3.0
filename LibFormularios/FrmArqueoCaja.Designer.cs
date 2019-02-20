@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.PanDatosArqueo = new System.Windows.Forms.Panel();
             this.TxtCodUsuario = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.BtnNuevo = new System.Windows.Forms.Button();
+            this.BtnLimpiar = new System.Windows.Forms.Button();
             this.TxtNroArqueo = new System.Windows.Forms.TextBox();
             this.BtnBuscarDoc = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,6 +51,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.PanDatosArqueo.SuspendLayout();
             this.PanDetalleArqueo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvDetalleArqueoCredito)).BeginInit();
@@ -61,7 +63,7 @@
             // 
             this.PanDatosArqueo.Controls.Add(this.TxtCodUsuario);
             this.PanDatosArqueo.Controls.Add(this.label3);
-            this.PanDatosArqueo.Controls.Add(this.BtnNuevo);
+            this.PanDatosArqueo.Controls.Add(this.BtnLimpiar);
             this.PanDatosArqueo.Controls.Add(this.TxtNroArqueo);
             this.PanDatosArqueo.Controls.Add(this.BtnBuscarDoc);
             this.PanDatosArqueo.Controls.Add(this.label1);
@@ -74,6 +76,7 @@
             // 
             // TxtCodUsuario
             // 
+            this.TxtCodUsuario.Enabled = false;
             this.TxtCodUsuario.Location = new System.Drawing.Point(133, 33);
             this.TxtCodUsuario.MaxLength = 10;
             this.TxtCodUsuario.Name = "TxtCodUsuario";
@@ -89,19 +92,20 @@
             this.label3.TabIndex = 33;
             this.label3.Text = "Codigo del Usuario:";
             // 
-            // BtnNuevo
+            // BtnLimpiar
             // 
-            this.BtnNuevo.Enabled = false;
-            this.BtnNuevo.Location = new System.Drawing.Point(595, 54);
-            this.BtnNuevo.Name = "BtnNuevo";
-            this.BtnNuevo.Size = new System.Drawing.Size(93, 32);
-            this.BtnNuevo.TabIndex = 32;
-            this.BtnNuevo.Text = "Nuevo";
-            this.BtnNuevo.UseVisualStyleBackColor = true;
-            this.BtnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
+            this.BtnLimpiar.Enabled = false;
+            this.BtnLimpiar.Location = new System.Drawing.Point(595, 54);
+            this.BtnLimpiar.Name = "BtnLimpiar";
+            this.BtnLimpiar.Size = new System.Drawing.Size(93, 32);
+            this.BtnLimpiar.TabIndex = 32;
+            this.BtnLimpiar.Text = "Limpiar";
+            this.BtnLimpiar.UseVisualStyleBackColor = true;
+            this.BtnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // TxtNroArqueo
             // 
+            this.TxtNroArqueo.Enabled = false;
             this.TxtNroArqueo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtNroArqueo.Location = new System.Drawing.Point(385, 11);
             this.TxtNroArqueo.MaxLength = 10;
@@ -173,13 +177,13 @@
             this.PanDetalleArqueo.Controls.Add(this.DgvDetalleArqueoContado);
             this.PanDetalleArqueo.Location = new System.Drawing.Point(3, 112);
             this.PanDetalleArqueo.Name = "PanDetalleArqueo";
-            this.PanDetalleArqueo.Size = new System.Drawing.Size(702, 168);
+            this.PanDetalleArqueo.Size = new System.Drawing.Size(702, 251);
             this.PanDetalleArqueo.TabIndex = 1;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 91);
+            this.label8.Location = new System.Drawing.Point(27, 127);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 13);
             this.label8.TabIndex = 3;
@@ -199,10 +203,10 @@
             this.DgvDetalleArqueoCredito.AllowUserToAddRows = false;
             this.DgvDetalleArqueoCredito.AllowUserToDeleteRows = false;
             this.DgvDetalleArqueoCredito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvDetalleArqueoCredito.Location = new System.Drawing.Point(5, 108);
+            this.DgvDetalleArqueoCredito.Location = new System.Drawing.Point(6, 143);
             this.DgvDetalleArqueoCredito.Name = "DgvDetalleArqueoCredito";
             this.DgvDetalleArqueoCredito.ReadOnly = true;
-            this.DgvDetalleArqueoCredito.Size = new System.Drawing.Size(696, 57);
+            this.DgvDetalleArqueoCredito.Size = new System.Drawing.Size(696, 105);
             this.DgvDetalleArqueoCredito.TabIndex = 1;
             // 
             // DgvDetalleArqueoContado
@@ -213,7 +217,7 @@
             this.DgvDetalleArqueoContado.Location = new System.Drawing.Point(6, 17);
             this.DgvDetalleArqueoContado.Name = "DgvDetalleArqueoContado";
             this.DgvDetalleArqueoContado.ReadOnly = true;
-            this.DgvDetalleArqueoContado.Size = new System.Drawing.Size(696, 71);
+            this.DgvDetalleArqueoContado.Size = new System.Drawing.Size(696, 107);
             this.DgvDetalleArqueoContado.TabIndex = 0;
             // 
             // panel1
@@ -225,7 +229,7 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.txtTotal);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(3, 286);
+            this.panel1.Location = new System.Drawing.Point(2, 369);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(702, 99);
             this.panel1.TabIndex = 2;
@@ -258,6 +262,7 @@
             // 
             // txtTotal
             // 
+            this.txtTotal.Enabled = false;
             this.txtTotal.Location = new System.Drawing.Point(527, 12);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(160, 20);
@@ -272,9 +277,14 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Total: ";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FrmArqueoCaja
             // 
-            this.ClientSize = new System.Drawing.Size(706, 391);
+            this.ClientSize = new System.Drawing.Size(706, 466);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanDetalleArqueo);
             this.Controls.Add(this.PanDatosArqueo);
@@ -300,7 +310,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox TxtCodUsuario;
         private System.Windows.Forms.Label label3;
-        protected System.Windows.Forms.Button BtnNuevo;
+        protected System.Windows.Forms.Button BtnLimpiar;
         protected System.Windows.Forms.TextBox TxtNroArqueo;
         protected System.Windows.Forms.Button BtnBuscarDoc;
         private System.Windows.Forms.Label label1;
@@ -317,5 +327,6 @@
         private System.Windows.Forms.DataGridView DgvDetalleArqueoCredito;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Timer timer1;
     }
 }

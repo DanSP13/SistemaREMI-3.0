@@ -106,22 +106,43 @@ namespace LibFormularios
         }
         private void BtnBuscarDoc_Click(object sender, EventArgs e)
         {
+            
             if (aArqueoCaja.ExisteClavePrimaria(TxtNroArqueo.Text))
             {
-                DgvDetalleArqueoContado.Columns.Clear();
-                BloqueoFormulario(false);
-                ProcesarClave();
+                timer1.Enabled = false;
+                aArqueoCaja.CargarArqueoCajaNroArqueo(TxtNroArqueo.Text,TxtCodUsuario.Text);
+                TxtFecha.Text = aArqueoCaja.ValorAtributo("Fecha");
+                TxtNroArqueo.Text = aArqueoCaja.ValorAtributo("NroArqueoCaja");
+                TxtSolesInicio.Text = aArqueoCaja.ValorAtributo("TotalSolesInicio");
+                TxtSolesFinal.Text = aArqueoCaja.ValorAtributo("TotalSolesFinal");
+                DgvDetalleArqueoContado.DataSource = null;
+                DgvDetalleArqueoCredito.DataSource = null;
+                DgvDetalleArqueoContado.Rows.Clear();
+                DgvDetalleArqueoCredito.Rows.Clear();
+                DgvDetalleArqueoContado.DataSource = aArqueoCaja.CargarArqueoCajaContadoNroArqueo(TxtFecha.Text,TxtCodUsuario.Text);
+                DgvDetalleArqueoCredito.DataSource = aArqueoCaja.CargarArqueoCajaCreditoNroArqueo(TxtFecha.Text, TxtCodUsuario.Text);
+                Calcular();
+                BtnLimpiar.Enabled = true;
+                TxtSolesInicio.Enabled = false;
+                TxtSolesFinal.Enabled = false;
+                BtnGuardar.Enabled = false;
             }
             else
             {
-                MessageBox.Show("No Existe Documento Venta");
+                if(TxtNroArqueo.Enabled == false)
+                {
+                    TxtNroArqueo.Enabled = true;
+                }
+                else
+                {
+                        MessageBox.Show("No Existe Documento Venta");
+                        TxtNroArqueo.Text = aArqueoCaja.UltimoArqueoCaja();
+                        FechaActual();
+                }
+                
             }
         }
 
-        private void BtnNuevo_Click(object sender, EventArgs e)
-        {
-
-        }
         public  void Grabar()
         {
             try
@@ -181,6 +202,50 @@ namespace LibFormularios
                 Total += subtotal;
             }
             txtTotal.Text = Convert.ToString(Total + Total2);
+        }
+
+        private void BtnLimpiar_Click(object sender, EventArgs e)
+        {
+            if (!aArqueoCaja.VerificarSiHizoArqueo(TxtCodUsuario.Text))
+            {
+                TxtNroArqueo.Text = aArqueoCaja.UltimoArqueoCaja();
+                FechaActual();
+                txtTotal.Text = "0";
+                TxtSolesInicio.Text = "0";
+                TxtSolesFinal.Text = "0";
+                DgvDetalleArqueoContado.DataSource = null;
+                DgvDetalleArqueoCredito.DataSource = null;
+                DgvDetalleArqueoContado.Rows.Clear();
+                DgvDetalleArqueoCredito.Rows.Clear();
+                DgvDetalleArqueoContado.DataSource = aArqueoCaja.CargarArqueoCajaContado(TxtCodUsuario.Text);
+                DgvDetalleArqueoCredito.DataSource = aArqueoCaja.CargarArqueoCajaCredito(TxtCodUsuario.Text);
+                Calcular();
+                TxtSolesInicio.Enabled = true;
+                TxtSolesFinal.Enabled = true;
+                BtnGuardar.Enabled = true;
+                BtnLimpiar.Enabled = false;
+                TxtNroArqueo.Enabled =false;
+            }
+            else
+            {
+                TxtNroArqueo.Text = aArqueoCaja.UltimoArqueoCaja();
+                FechaActual();
+                TxtSolesInicio.Text = "0";
+                TxtSolesFinal.Text = "0";
+                DgvDetalleArqueoContado.DataSource = null;
+                DgvDetalleArqueoCredito.DataSource = null;
+                DgvDetalleArqueoContado.Rows.Clear();
+                DgvDetalleArqueoCredito.Rows.Clear();
+                TxtSolesInicio.Enabled = true;
+                TxtSolesFinal.Enabled = true;
+                BtnGuardar.Enabled = true;
+                BtnLimpiar.Enabled = false;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TxtFecha.Text = string.Format(DateTime.Now.ToString());
         }
     }
 }

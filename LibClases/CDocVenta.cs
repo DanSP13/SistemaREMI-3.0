@@ -32,5 +32,23 @@ namespace LibClases
             C.EjecutarSelect(Consulta);
             return C.Datos.Tables[0].Rows[0]["Nro"].ToString();
         }
+
+        public object DiasMasVendidos()
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuDiasMasVendidos";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
+        }
+
+        public object ClientesEstrella()
+        {
+            //retorna una tabla con la lista con las unidades de los productos
+            CConexion Con = new CConexion();
+            string Consulta = "exec spuClientesEstrella";
+            Con.EjecutarSelect(Consulta);
+            return Con.Datos.Tables[0];
+        }
     }
 }
